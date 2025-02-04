@@ -8,18 +8,20 @@ const WALL_PUSHBACK_X = 2000
 const WALL_PUSHBACK_Y = -400
 const WALL_SLIDE_MAX = 200
 
-var jumping = 0
-var debug_counter = 0
+var jumping = 0			#IS JUMPING ?
+var debug_counter = 0	
 
 func _physics_process(delta: float) -> void:
+	
 	var direction := Input.get_axis("ui_left", "ui_right")
-	var wall_normal = get_wall_normal()
+	var wall_normal = get_wall_normal()		
 	
 	#DEBUGGING-----------------------------------------
 	print("----",debug_counter,"----")
 	print("DIR - ",direction)
 	print("VEL - ",velocity)
 	print("JUMP - ",jumping)
+	print("GRAVITY - ", get_gravity())
 	debug_counter += 1
 	#---------------------------------------------------	
 	
@@ -30,14 +32,15 @@ func _physics_process(delta: float) -> void:
 		jumping = 0 #Reset jumping when touching ground
 	
 	
+	#HANDLES JUMP THINGS
 	if Input.is_action_just_pressed("ui_accept"):
-		if is_on_floor():
+		if is_on_floor():		#HANDLES JUMP
 			velocity.y = JUMP_VELOCITY
 			jumping = 1
-		elif wall_colider():
-			velocity = wall_normal * WALL_PUSHBACK_X
+		elif wall_colider():	#HANDLES WALL JUMP
+			velocity.x = wall_normal.x * WALL_PUSHBACK_X
 			velocity.y = WALL_PUSHBACK_Y
-		elif jumping == 1:
+		elif jumping == 1:		#HANDLES DOUBLE JUMP
 			velocity.y = JUMP_VELOCITY
 			jumping = 0
 	
@@ -50,6 +53,7 @@ func _physics_process(delta: float) -> void:
 	#HANDLE X DIRECTION
 	if direction:
 		velocity.x = direction * SPEED
+		#CHANGES RAYCAST DIR
 		if direction == 1:
 			rayWall.scale.x = 1
 		elif direction == -1:
@@ -60,5 +64,6 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+#RAYCAST FUNC TO SEE IF IS COLLIDING WITH A WALL
 func wall_colider():
 	return rayWall.is_colliding()
