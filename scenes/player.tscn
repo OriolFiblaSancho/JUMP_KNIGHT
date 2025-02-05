@@ -18,6 +18,12 @@ texture = ExtResource("2_i4hsp")
 shape = SubResource("RectangleShape2D_yfqtb")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 20.0
 
 [node name="RayWall" type="RayCast2D" parent="."]
 target_position = Vector2(38, 0)
+
+[node name="CoyoteTime" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
