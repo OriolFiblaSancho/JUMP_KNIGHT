@@ -32,6 +32,7 @@ func _physics_process(delta: float) -> void:
 		jumping = 0 #Reset jumping when touching ground
 	
 	
+	
 	#HANDLES JUMP THINGS
 	if Input.is_action_just_pressed("ui_accept"):
 		if is_on_floor():		#HANDLES JUMP
