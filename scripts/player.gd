@@ -41,7 +41,7 @@ func _physics_process(delta: float):
 			wall_jump(get_wall_normal())
 		elif jumping == 1:		#HANDLES DOUBLE JUMP
 			pass
-			#double_jump()
+			double_jump()
 	
 			
 	#WALL SLIDING
