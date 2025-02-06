@@ -4,13 +4,13 @@ extends CharacterBody2D
 @onready var coyote_time = $CoyoteTime
 
 const SPEED = 600.0
-const JUMP_VELOCITY = -600.0
+const JUMP_VELOCITY = -800.0
 const WALL_PUSHBACK_X = 700
-const WALL_PUSHBACK_Y = -700
+const WALL_PUSHBACK_Y = -900
 const WALL_SLIDE_MAX = 300
 const ACCELERATION_x = SPEED * 7 # increase to max speed in 1/7th of a second
-const ACCELERATION_y = 20
-const MAX_ACCELERATION_y = 1200
+const ACCELERATION_y =200
+const MAX_ACCELERATION_y = 2000
 
 var jumping = 0 #IS JUMPING ?
 var fall_acceleration = 0.0 #stores fall acc
