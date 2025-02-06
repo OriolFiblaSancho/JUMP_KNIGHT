@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bio4rgcpm2yfr"]
+
+[ext_resource type="Script" path="res://scripts/hearts_cont.gd" id="1_pse6d"]
+
+[node name="heartsCont" type="HBoxContainer"]
+offset_left = 23.0
+offset_top = 22.0
+offset_right = 219.0
+offset_bottom = 62.0
+script = ExtResource("1_pse6d")

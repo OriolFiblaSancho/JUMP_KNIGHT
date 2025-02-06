@@ -2,6 +2,11 @@ extends CharacterBody2D
 
 @onready var rayWall = $RayWall
 @onready var coyote_time = $CoyoteTime
+@onready var heartsContainer = $CanvasLayer/heartsCont
+@onready var hurtBoxCol = $hurtBox/CollisionShape2D
+@onready var inmortalTime = $InmortalTime
+
+signal healthChanged
 
 const SPEED = 600.0
 const JUMP_VELOCITY = -800.0
@@ -11,11 +16,20 @@ const WALL_SLIDE_MAX = 300
 const ACCELERATION_x = SPEED * 7 # increase to max speed in 1/7th of a second
 const ACCELERATION_y =200
 const MAX_ACCELERATION_y = 2000
+const MAXHEALTH = 5
 
 var jumping = 0 #IS JUMPING ?
 var fall_acceleration = 0.0 #stores fall acc
 var debug_counter = 0
 
+
+var currentHealth = 5 #stores the actual health
+
+func _ready():
+	heartsContainer.setMaxHeart(MAXHEALTH)
+	heartsContainer.updateHeart(currentHealth)
+	healthChanged.connect(heartsContainer.updateHeart)
+	
 func _physics_process(delta: float):
 
 	var direction := Input.get_axis("ui_left", "ui_right")
@@ -54,8 +68,6 @@ func _physics_process(delta: float):
 	elif direction == -1:
 		rayWall.scale.x = -1
 		
-	
-	
 	velocity.x = move_toward(velocity.x, direction * SPEED, ACCELERATION_x * delta)
 
 	move_and_slide()
@@ -75,6 +87,7 @@ func _physics_process(delta: float):
 		print("COYOTE - STOPED")
 	else:
 		print("COYOTE - RUNNING")
+	print("HEALTH - ",currentHealth)
 	debug_counter += 1
 	#---------------------------------------------------	
 	
@@ -96,3 +109,31 @@ func wall_jump(wall_normal):
 func wall_sliding():
 	velocity.y = min(velocity.y, WALL_SLIDE_MAX)
 	jumping = 1
+
+#DAMAGE FUNC
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	if area.name == "damageArea":
+		currentHealth -= 1
+		hurtBoxCol.disabled = true
+		
+		if currentHealth < 0:
+			currentHealth = MAXHEALTH
+		healthChanged.emit(currentHealth) #Emits the actual health to the counter
+		knockBack()
+		inmortalTime.start()
+		if inmortalTime.is_stopped():
+			hurtBoxCol.disabled = false
+		
+func knockBack():
+	var direction := Input.get_axis("ui_left", "ui_right")
+	#Note for the future: May have problems when usign moving spikes with this
+	#if the player doesn't move it will not have knockback so this should use the
+	#spike vel: https://youtu.be/SNWpFTer-YU?si=ajyiO5ZoL9CPfGBG
+	var knockBackVel = Vector2(-velocity.x + 300*(direction*-1) ,-500)
+	var knockBackDir = knockBackVel
+	velocity = knockBackDir
+	move_and_slide()
+
+func frameFreeze(timeScale,duration):
+	#Engine.time_scale = timeScale
+	pass

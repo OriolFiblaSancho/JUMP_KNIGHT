@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://kvplsqky1fk6"]
+[gd_scene load_steps=7 format=3 uid="uid://kvplsqky1fk6"]
 
 [ext_resource type="PackedScene" uid="uid://ca7r200x4ljon" path="res://scenes/player.tscn" id="1_oq2ni"]
 [ext_resource type="Texture2D" uid="uid://bmj1q6uffjhgc" path="res://demoCube.png" id="2_f3ddk"]
 [ext_resource type="PackedScene" uid="uid://bi28a7lcaty7m" path="res://scenes/demoRandMechanic.tscn" id="3_5y7bu"]
+[ext_resource type="PackedScene" uid="uid://dkpilh4qdbgs2" path="res://scenes/spike.tscn" id="4_qiuud"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jts56"]
 texture = ExtResource("2_f3ddk")
@@ -26,3 +27,9 @@ layer_0/tile_data = PackedInt32Array(1376258, 0, 0, 1376259, 0, 0, 1376260, 0, 0
 
 [node name="demoRandMechanic" parent="." instance=ExtResource("3_5y7bu")]
 position = Vector2(-147, -83)
+
+[node name="spike" parent="." instance=ExtResource("4_qiuud")]
+position = Vector2(71, 279)
+
+[node name="spike3" parent="." instance=ExtResource("4_qiuud")]
+position = Vector2(-84, 279)
