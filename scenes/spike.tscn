@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkpilh4qdbgs2"]
+[gd_scene load_steps=2 format=3 uid="uid://c3uf4ij2lqcl"]
 
-[ext_resource type="Texture2D" uid="uid://d1pnxih3n7p0h" path="res://demoSpike.png" id="1_sswmk"]
+[ext_resource type="Texture2D" uid="uid://d1pnxih3n7p0h" path="res://assets/demoSpike.png" id="1_sswmk"]
 
 [node name="spike" type="Sprite2D" groups=["spike"]]
 position = Vector2(1, 0)

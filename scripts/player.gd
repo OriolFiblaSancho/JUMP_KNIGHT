@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var playerSprite = $Sprite2D
 @onready var rayWall = $RayWall
 @onready var coyote_time = $CoyoteTime
 @onready var heartsContainer = $CanvasLayer/heartsCont
@@ -20,7 +21,7 @@ const MAXHEALTH = 5
 var jumping = 0 #IS JUMPING ?
 var fall_acceleration = 0.0 #stores fall acc
 var debug_counter = 0
-
+var last_dir = 0
 
 var currentHealth = 5 #stores the actual health
 
@@ -33,7 +34,8 @@ func _physics_process(delta: float):
 
 	var direction := Input.get_axis("ui_left", "ui_right")
 	var was_on_floor = is_on_floor()
-	
+	if direction != 0:
+		last_dir = direction
 	# GRAVITY HANDLING
 	if not is_on_floor():
 		#Calculates acceleration and add it to the var
@@ -109,27 +111,49 @@ func wall_sliding():
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if area.name == "damageArea" and hurtBoxCol.disabled == false:
 		currentHealth -= 1
-		hurtBoxCol.disabled = true
-		#frameFreeze()	##############ADD IT BACK WHEN SOUND AND SKIN
 		if currentHealth < 0:
 			currentHealth = MAXHEALTH
 		healthChanged.emit(currentHealth) #Emits the actual health to the counter
 		knockBack()
-		await get_tree().create_timer(0.5, true, false, true).timeout
-		hurtBoxCol.disabled = false
+		frameFreeze()
+		#Sin esto inmortalHit superpone al frameFreeze
+		await get_tree().create_timer(0.2, true, false, true).timeout
+		inmortalHit() 
+		
+
 		
 func knockBack():
 	var direction := Input.get_axis("ui_left", "ui_right")
 	#Note for the future: May have problems when usign moving spikes with this
 	#if the player doesn't move it will not have knockback so this should use the
 	#spike vel: https://youtu.be/SNWpFTer-YU?si=ajyiO5ZoL9CPfGBG
-	var knockBackVel = Vector2(-velocity.x + 300*(direction*-1) ,-500)
+	var knockBackVel = Vector2(1200*(last_dir*-1) ,-600)
 	var knockBackDir = knockBackVel
+	jumping = 1
 	velocity = knockBackDir
 	move_and_slide()
 
 func frameFreeze():
 	Engine.time_scale = 0
-	await get_tree().create_timer(0.10, true, false, true).timeout
+	playerSprite.self_modulate = Color(255,255,255,1)
+	await get_tree().create_timer(0.20, true, false, true).timeout
 	Engine.time_scale = 1
+	playerSprite.self_modulate = Color("ffffff",1)
+
+func inmortalHit():
+	playerSprite.self_modulate = Color("ffffff",1)
+	hurtBoxCol.disabled = true
+	var original_color = playerSprite.self_modulate
+	var tween = create_tween().set_loops()
+	
+	tween.tween_callback(playerSprite.set_self_modulate.bind(Color(255,255,255,0.5)))
+	tween.tween_interval(0.1)
+	tween.tween_callback(playerSprite.set_self_modulate.bind(original_color))
+	tween.tween_interval(0.1)
+	
+	await get_tree().create_timer(0.7, true, false, true).timeout
+	tween.kill()
+	playerSprite.self_modulate = original_color
+	hurtBoxCol.disabled = false
+	
 	
