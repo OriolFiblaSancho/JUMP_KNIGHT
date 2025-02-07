@@ -4,7 +4,6 @@ extends CharacterBody2D
 @onready var coyote_time = $CoyoteTime
 @onready var heartsContainer = $CanvasLayer/heartsCont
 @onready var hurtBoxCol = $hurtBox/CollisionShape2D
-@onready var inmortalTime = $InmortalTime
 
 signal healthChanged
 
@@ -83,10 +82,6 @@ func _physics_process(delta: float):
 	print("JUMP - ",jumping)
 	print("WAS - ", was_on_floor)
 	print("IS - ",is_on_floor())
-	if coyote_time.is_stopped():
-		print("COYOTE - STOPED")
-	else:
-		print("COYOTE - RUNNING")
 	print("HEALTH - ",currentHealth)
 	debug_counter += 1
 	#---------------------------------------------------	
@@ -112,17 +107,16 @@ func wall_sliding():
 
 #DAMAGE FUNC
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if area.name == "damageArea":
+	if area.name == "damageArea" and hurtBoxCol.disabled == false:
 		currentHealth -= 1
 		hurtBoxCol.disabled = true
-		
+		#frameFreeze()	##############ADD IT BACK WHEN SOUND AND SKIN
 		if currentHealth < 0:
 			currentHealth = MAXHEALTH
 		healthChanged.emit(currentHealth) #Emits the actual health to the counter
 		knockBack()
-		inmortalTime.start()
-		if inmortalTime.is_stopped():
-			hurtBoxCol.disabled = false
+		await get_tree().create_timer(0.5, true, false, true).timeout
+		hurtBoxCol.disabled = false
 		
 func knockBack():
 	var direction := Input.get_axis("ui_left", "ui_right")
@@ -134,6 +128,8 @@ func knockBack():
 	velocity = knockBackDir
 	move_and_slide()
 
-func frameFreeze(timeScale,duration):
-	#Engine.time_scale = timeScale
-	pass
+func frameFreeze():
+	Engine.time_scale = 0
+	await get_tree().create_timer(0.10, true, false, true).timeout
+	Engine.time_scale = 1
+	

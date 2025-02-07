@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_aiyym"]
 [ext_resource type="Texture2D" uid="uid://62qao5teqwue" path="res://icon.svg" id="2_i4hsp"]
-[ext_resource type="PackedScene" uid="uid://bio4rgcpm2yfr" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
+[ext_resource type="PackedScene" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yfqtb"]
 size = Vector2(64, 64)
@@ -27,9 +27,6 @@ target_position = Vector2(38, 0)
 [node name="CoyoteTime" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
-
-[node name="InmortalTime" type="Timer" parent="."]
-wait_time = 0.1
 
 [node name="hurtBox" type="Area2D" parent="."]
 
