@@ -7,7 +7,9 @@ extends CharacterBody2D
 @onready var hurtBoxCol = $hurtBox/CollisionShape2D
 @onready var dashTimer = $dashAgain
 @onready var dashingTimer = $dashing
-
+@onready var attackArea = $attackArea
+@onready var attackCol = $attackArea/CollisionShape2D
+@onready var attackTimer = $attack
 signal healthChanged
 
 const SPEED = 600.0
@@ -27,11 +29,15 @@ var last_dir = 1
 var dashing = false
 var canDash = true
 var currentHealth = 5 #stores the actual health
+var defaultSprite = preload("res://assets/icon.svg")
+var attacking = false
 
 func _ready():
 	heartsContainer.setMaxHeart(MAXHEALTH)
 	heartsContainer.updateHeart(currentHealth)
 	healthChanged.connect(heartsContainer.updateHeart)
+	
+	playerSprite.texture = defaultSprite
 	
 func _physics_process(delta: float):
 
@@ -44,22 +50,22 @@ func _physics_process(delta: float):
 		#Calculates acceleration and add it to the var
 		fall_acceleration = min(fall_acceleration + ACCELERATION_y * delta * 100, MAX_ACCELERATION_y)
 		velocity.y += (500 + fall_acceleration) * delta
-		
 	else:
 		fall_acceleration = 0  # Resetear aceleración al tocar el suelo
 		if jumping != 0:
 			jumping = 0  # Reset jumping when touching ground
 	
+
 	
 	#HANDLES JUMP THINGS
 	if Input.is_action_just_pressed("jump"):
+		
 		if is_on_floor() || !coyote_time.is_stopped():	#HANDLES JUMP and coyote time
 			velocity.y = JUMP_VELOCITY
 			jumping = 1
 		elif wall_colider():	#HANDLES WALL JUMP
 			wall_jump(get_wall_normal())
 		elif jumping == 1:		#HANDLES DOUBLE JUMP
-			pass
 			double_jump()
 	
 			
@@ -79,9 +85,13 @@ func _physics_process(delta: float):
 	elif last_dir == -1:
 		playerSprite.flip_h = true
 		
-	
+	attack()
+	if attacking:
+		attackCol.disabled = false
+	else:
+		attackCol.disabled = true
 	dash()
-	
+
 	
 	move_and_slide()
 	
@@ -134,6 +144,8 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 		
 #knockBack FUNC	
 func knockBack():
+	
+	
 	var direction := Input.get_axis("ui_left", "ui_right")
 	#Note for the future: May have problems when usign moving spikes with this
 	#if the player doesn't move it will not have knockback so this should use the
@@ -189,11 +201,35 @@ func dash():
 		var tween = get_tree().create_tween()
 		tween.tween_property(playerSprite, "rotation_degrees", rotation_degrees + 360 * direction, dashTimer.wait_time)
 
-		
-		
 func _on_dash_again_timeout() -> void:
 	canDash = true
 
 func _on_dashing_timeout() -> void:
 	dashing = false
+
+func attack():
 	
+	if Input.is_action_just_pressed("attack"):
+		if Input.is_action_pressed("ui_left"):
+			attacking = true
+			attackArea.position = Vector2(-47,1)
+			attackArea.rotation_degrees = 0
+			attackTimer.start()
+		elif Input.is_action_pressed("ui_right"):
+			attacking = true
+			attackArea.position = Vector2(47,1)
+			attackArea.rotation_degrees = 0
+			attackTimer.start()
+		elif Input.is_action_pressed("ui_up"):
+			attacking = true
+			attackArea.position = Vector2(0,-40)
+			attackArea.rotation_degrees = 90
+			attackTimer.start()
+		elif Input.is_action_pressed("ui_down"):
+			attacking = true
+			attackArea.position = Vector2(0,40)
+			attackArea.rotation_degrees = 90
+			attackTimer.start()
+
+func _on_attack_timeout() -> void:
+	attacking = false
