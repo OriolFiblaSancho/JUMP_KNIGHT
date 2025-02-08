@@ -5,6 +5,8 @@ extends CharacterBody2D
 @onready var coyote_time = $CoyoteTime
 @onready var heartsContainer = $CanvasLayer/heartsCont
 @onready var hurtBoxCol = $hurtBox/CollisionShape2D
+@onready var dashTimer = $dashAgain
+@onready var dashingTimer = $dashing
 
 signal healthChanged
 
@@ -21,8 +23,9 @@ const MAXHEALTH = 5
 var jumping = 0 #IS JUMPING ?
 var fall_acceleration = 0.0 #stores fall acc
 var debug_counter = 0
-var last_dir = 0
-
+var last_dir = 1
+var dashing = false
+var canDash = true
 var currentHealth = 5 #stores the actual health
 
 func _ready():
@@ -37,10 +40,11 @@ func _physics_process(delta: float):
 	if direction != 0:
 		last_dir = direction
 	# GRAVITY HANDLING
-	if not is_on_floor():
+	if not is_on_floor() and !dashing:
 		#Calculates acceleration and add it to the var
 		fall_acceleration = min(fall_acceleration + ACCELERATION_y * delta * 100, MAX_ACCELERATION_y)
 		velocity.y += (500 + fall_acceleration) * delta
+		
 	else:
 		fall_acceleration = 0  # Resetear aceleración al tocar el suelo
 		if jumping != 0:
@@ -48,7 +52,7 @@ func _physics_process(delta: float):
 	
 	
 	#HANDLES JUMP THINGS
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() || !coyote_time.is_stopped():	#HANDLES JUMP and coyote time
 			velocity.y = JUMP_VELOCITY
 			jumping = 1
@@ -70,7 +74,15 @@ func _physics_process(delta: float):
 		rayWall.scale.x = -1
 		
 	velocity.x = move_toward(velocity.x, direction * SPEED, ACCELERATION_x * delta)
-
+	if last_dir == 1:
+		playerSprite.flip_h = false
+	elif last_dir == -1:
+		playerSprite.flip_h = true
+		
+	
+	dash()
+	
+	
 	move_and_slide()
 	
 	#Check if it was on floor after move_and_slide()
@@ -84,7 +96,7 @@ func _physics_process(delta: float):
 	print("JUMP - ",jumping)
 	print("WAS - ", was_on_floor)
 	print("IS - ",is_on_floor())
-	print("HEALTH - ",currentHealth)
+	print("DASHING - ", dashing)
 	debug_counter += 1
 	#---------------------------------------------------	
 	
@@ -120,8 +132,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 		await get_tree().create_timer(0.2, true, false, true).timeout
 		inmortalHit() 
 		
-
-		
+#knockBack FUNC	
 func knockBack():
 	var direction := Input.get_axis("ui_left", "ui_right")
 	#Note for the future: May have problems when usign moving spikes with this
@@ -133,6 +144,7 @@ func knockBack():
 	velocity = knockBackDir
 	move_and_slide()
 
+#frameFreeze FUNC
 func frameFreeze():
 	Engine.time_scale = 0
 	playerSprite.self_modulate = Color(255,255,255,1)
@@ -140,6 +152,7 @@ func frameFreeze():
 	Engine.time_scale = 1
 	playerSprite.self_modulate = Color("ffffff",1)
 
+#inmortalHit FUNC
 func inmortalHit():
 	playerSprite.self_modulate = Color("ffffff",1)
 	hurtBoxCol.disabled = true
@@ -151,9 +164,36 @@ func inmortalHit():
 	tween.tween_callback(playerSprite.set_self_modulate.bind(original_color))
 	tween.tween_interval(0.1)
 	
-	await get_tree().create_timer(0.7, true, false, true).timeout
+	await get_tree().create_timer(0.7).timeout
 	tween.kill()
 	playerSprite.self_modulate = original_color
 	hurtBoxCol.disabled = false
+
+func dash():
+	var direction := Input.get_axis("ui_left", "ui_right")
+	if direction != 0:
+		last_dir = direction
 	
+	if Input.is_action_just_pressed("dash") and canDash:
+		dashing = true
+		canDash = false
+		dashingTimer.start()
+		dashTimer.start()
+		
+		var dashVel = Vector2(2000 * last_dir, 0)
+		velocity = dashVel
+		
+		playerSprite.rotation_degrees = 0
+		
+		# Rotate the player (flip effect)
+		var tween = get_tree().create_tween()
+		tween.tween_property(playerSprite, "rotation_degrees", rotation_degrees + 360 * direction, dashTimer.wait_time)
+
+		
+		
+func _on_dash_again_timeout() -> void:
+	canDash = true
+
+func _on_dashing_timeout() -> void:
+	dashing = false
 	
