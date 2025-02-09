@@ -380,7 +380,13 @@ shape = SubResource("CapsuleShape2D_5weh3")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
-position_smoothing_speed = 20.0
+position_smoothing_speed = 15.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.02
+drag_top_margin = 0.02
+drag_right_margin = 0.02
+drag_bottom_margin = 0.02
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
