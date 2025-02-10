@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4qu6sjnsun20"]
+
+[ext_resource type="Script" path="res://scripts/demoDoubleJumpBox.gd" id="1_iivxb"]
+[ext_resource type="Texture2D" uid="uid://g8n43fvmh30g" path="res://assets/demoDoubleJumpBox.png" id="1_q2ybu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n6ghr"]
+size = Vector2(64, 64)
+
+[node name="demoDoubleJumpBox" type="Node2D"]
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_iivxb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_q2ybu")
+
+[node name="demoDoubleJumpBoxArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="demoDoubleJumpBoxArea"]
+shape = SubResource("RectangleShape2D_n6ghr")
+
+[connection signal="area_entered" from="demoDoubleJumpBoxArea" to="." method="_on_demo_double_jump_box_area_area_entered"]

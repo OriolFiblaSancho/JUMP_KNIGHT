@@ -1,7 +1,7 @@
-[gd_scene load_steps=36 format=3 uid="uid://ca7r200x4ljon"]
+[gd_scene load_steps=37 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_aiyym"]
-[ext_resource type="PackedScene" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
+[ext_resource type="PackedScene" uid="uid://bio4rgcpm2yfr" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
 [ext_resource type="Texture2D" uid="uid://cqd53f3spruu4" path="res://assets/knight-sprite/Idle.png" id="3_4ely7"]
 [ext_resource type="Texture2D" uid="uid://br6rqy1qr7d03" path="res://assets/knight-sprite/Attack.png" id="3_s1i6c"]
 [ext_resource type="Texture2D" uid="uid://docx7d512tb2a" path="res://assets/knight-sprite/Roll.png" id="5_3m2h8"]
@@ -339,6 +339,10 @@ height = 59.0
 radius = 49.0
 height = 112.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8rlgb"]
+radius = 22.0
+height = 66.0
+
 [node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_aiyym")
 
@@ -400,8 +404,14 @@ position = Vector2(-56, 2)
 shape = SubResource("CapsuleShape2D_olwe3")
 disabled = true
 
+[node name="interactArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interactArea"]
+shape = SubResource("CapsuleShape2D_8rlgb")
+
 [connection signal="timeout" from="dashing" to="." method="_on_dashing_timeout"]
 [connection signal="timeout" from="dashAgain" to="." method="_on_dash_again_timeout"]
 [connection signal="timeout" from="attack" to="." method="_on_attack_timeout"]
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_entered" from="attackArea" to="." method="_on_attack_area_area_entered"]
+[connection signal="area_entered" from="interactArea" to="." method="_on_interact_area_area_entered"]

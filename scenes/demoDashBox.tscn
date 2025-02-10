@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1p3y5iuj2qx4"]
+
+[ext_resource type="Script" path="res://scripts/demoDoubleJumpBox.gd" id="1_fvfia"]
+[ext_resource type="Texture2D" uid="uid://88egfyhx36st" path="res://assets/demoDashBox.png" id="2_5cfnq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n6ghr"]
+size = Vector2(64, 64)
+
+[node name="demoDashBox" type="Node2D"]
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_fvfia")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5cfnq")
+
+[node name="demoDashBoxArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="demoDashBoxArea"]
+shape = SubResource("RectangleShape2D_n6ghr")
+
+[connection signal="area_entered" from="demoDashBoxArea" to="." method="_on_demo_double_jump_box_area_area_entered"]

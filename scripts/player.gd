@@ -33,9 +33,16 @@ var canDash = true
 var currentHealth = 5 #stores the actual health
 var defaultSprite = preload("res://assets/icon.svg")
 var attacking = false
-
+var canDoubleJump = false
 var currentState = playerStates.IDLE
+
+var doubleJumpActive = false
+var wallJumpActive = false
+var dashActive = false
+
 enum playerStates {IDLE, RUN, SWORD, JUMP, DASH, ATTACK, FALLING}
+
+
 
 func _ready():
 	heartsContainer.setMaxHeart(MAXHEALTH)
@@ -73,6 +80,7 @@ func _physics_process(delta: float):
 	else:
 		fall_acceleration = 0  # Resetear aceleración al tocar el suelo
 		jumping = 0  # Reset jumping when touching ground
+		canDoubleJump = false
 			
 	
 	if attacking:
@@ -97,11 +105,17 @@ func _physics_process(delta: float):
 		if is_on_floor() || !coyote_time.is_stopped():	#HANDLES JUMP and coyote time
 			velocity.y = JUMP_VELOCITY
 			jumping = 1
-			
+			canDoubleJump = true
 		elif wall_colider():	#HANDLES WALL JUMP
-			wall_jump(get_wall_normal())
-		elif jumping == 1:		#HANDLES DOUBLE JUMP
-			double_jump()
+			if wallJumpActive:
+				wall_jump(get_wall_normal())
+			else:
+				pass
+		elif canDoubleJump:		#HANDLES DOUBLE JUMP
+			if doubleJumpActive:
+				double_jump()
+			else:
+				pass
 			
 			
 	
@@ -125,8 +139,9 @@ func _physics_process(delta: float):
 	elif last_dir == -1:
 		playerSprite.flip_h = false
 		
-	
+
 	dash()
+
 
 	
 	move_and_slide()
@@ -134,6 +149,7 @@ func _physics_process(delta: float):
 	#Check if it was on floor after move_and_slide()
 	if was_on_floor && !is_on_floor():
 		coyote_time.start()
+		canDoubleJump = true
 	
 
 		
@@ -141,7 +157,7 @@ func _physics_process(delta: float):
 	print("----",debug_counter,"----")
 	print("DIR - ",direction)
 	print("VEL - ",velocity)
-	print("JUMP - ",jumping)
+	print("CAN 2 JUMP - ",canDoubleJump)
 	print("WAS - ", was_on_floor)
 	print("IS - ",is_on_floor())
 	print("CURRENT - ", currentState)
@@ -156,7 +172,7 @@ func wall_colider():
 #DOUBLE JUMP FUNC
 func double_jump():
 	velocity.y = JUMP_VELOCITY
-	jumping = 0
+	canDoubleJump = false
 	fall_acceleration = 0
 	
 #WALL JUMP FUNC
@@ -168,6 +184,7 @@ func wall_jump(wall_normal):
 func wall_sliding():
 	velocity.y = min(velocity.y, WALL_SLIDE_MAX)
 	jumping = 1
+	canDoubleJump = true
 
 #DAMAGE FUNC
 func _on_hurt_box_area_entered(area: Area2D) -> void:
@@ -191,6 +208,7 @@ func knockBack():
 	var knockBackVel = Vector2(1200*(last_dir*-1) ,-600)
 	var knockBackDir = knockBackVel
 	jumping = 1
+	canDoubleJump = true
 	velocity = knockBackDir
 	move_and_slide()
 
@@ -220,19 +238,22 @@ func inmortalHit():
 	hurtBoxCol.disabled = false
 
 func dash():
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction != 0:
-		last_dir = direction
-		
-	if Input.is_action_just_pressed("dash") and canDash:
+	if dashActive:
+		var direction := Input.get_axis("ui_left", "ui_right")
+		if direction != 0:
+			last_dir = direction
+			
+		if Input.is_action_just_pressed("dash") and canDash:
 
-		dashing = true
-		canDash = false
-		dashingTimer.start()
-		dashTimer.start()
-		
-		var dashVel = Vector2(2000 * last_dir, 0)
-		velocity = dashVel
+			dashing = true
+			canDash = false
+			dashingTimer.start()
+			dashTimer.start()
+			
+			var dashVel = Vector2(2000 * last_dir, 0)
+			velocity = dashVel
+	else:
+		pass
 		
 
 func _on_dash_again_timeout() -> void:
@@ -277,7 +298,7 @@ func _on_attack_timeout() -> void:
 	attacking = false
 	attackCol.set_deferred("disabled", true)  # Disable hitbox
 	attackCol.position = Vector2(0, 0)  # Reset hitbox position
-
+	
 	# Return to the correct state
 	if !is_on_floor():
 		if velocity.y < 0:
@@ -292,6 +313,16 @@ func _on_attack_timeout() -> void:
 
 func _on_attack_area_area_entered(area: Area2D) -> void:
 	if area.name == "damageArea" and !attackCol.disabled:
+		canDoubleJump = true
 		# Only bounce if the player is attacking downward (so pogo effect is relevant)
 		if velocity.y > 0:  # Ensure you're falling (attacking downward)
 			velocity.y = -600
+
+func _on_interact_area_area_entered(area: Area2D) -> void:
+	if area.name == "demoDoubleJumpBoxArea":
+		doubleJumpActive = true
+	elif area.name == "demoWallJumpBoxArea":
+		wallJumpActive = true
+	elif area.name == "demoDashBoxArea":
+		dashActive = true
+	
