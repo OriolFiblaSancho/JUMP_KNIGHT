@@ -1,11 +1,12 @@
-[gd_scene load_steps=41 format=3 uid="uid://ca7r200x4ljon"]
+[gd_scene load_steps=42 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_aiyym"]
-[ext_resource type="PackedScene" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
+[ext_resource type="PackedScene" uid="uid://bio4rgcpm2yfr" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
 [ext_resource type="Texture2D" uid="uid://cqd53f3spruu4" path="res://assets/knight-sprite/Idle.png" id="3_4ely7"]
 [ext_resource type="Texture2D" uid="uid://br6rqy1qr7d03" path="res://assets/knight-sprite/Attack.png" id="3_s1i6c"]
 [ext_resource type="Texture2D" uid="uid://docx7d512tb2a" path="res://assets/knight-sprite/Roll.png" id="5_3m2h8"]
 [ext_resource type="Texture2D" uid="uid://c3h1c5u6djkjc" path="res://assets/knight-sprite/Run.png" id="6_1awkv"]
+[ext_resource type="Texture2D" uid="uid://bu1qn4va3m01" path="res://assets/attackSprite.png" id="6_4t11m"]
 [ext_resource type="Script" path="res://boxContainer.gd" id="7_0djum"]
 [ext_resource type="Texture2D" uid="uid://88egfyhx36st" path="res://assets/demoDashBox.png" id="8_gb30l"]
 [ext_resource type="Texture2D" uid="uid://g8n43fvmh30g" path="res://assets/demoDoubleJumpBox.png" id="9_hyk86"]
@@ -340,8 +341,8 @@ radius = 17.0
 height = 59.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_olwe3"]
-radius = 49.0
-height = 112.0
+radius = 31.0
+height = 122.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8rlgb"]
 radius = 22.0
@@ -354,6 +355,12 @@ script = ExtResource("1_aiyym")
 sprite_frames = SubResource("SpriteFrames_3yw3j")
 animation = &"run"
 frame = 1
+
+[node name="attackSprite" type="Sprite2D" parent="AnimatedSprite2D"]
+position = Vector2(-46, -1)
+scale = Vector2(1.25781, 1.125)
+texture = ExtResource("6_4t11m")
+flip_h = true
 
 [node name="anim" type="AnimationPlayer" parent="."]
 libraries = {
@@ -378,7 +385,7 @@ wait_time = 0.25
 wait_time = 0.4
 
 [node name="attack" type="Timer" parent="."]
-wait_time = 0.42
+wait_time = 0.3
 
 [node name="hurtBox" type="Area2D" parent="."]
 
@@ -430,7 +437,8 @@ texture = ExtResource("10_ay8gs")
 position = Vector2(0, -3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attackArea"]
-position = Vector2(-56, 2)
+position = Vector2(-47, 2)
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_olwe3")
 disabled = true
 

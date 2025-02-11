@@ -15,7 +15,7 @@ extends CharacterBody2D
 @onready var DemoDashBoxSprite = $CanvasLayer/BoxContainer/DemoDashBox
 @onready var DemoDoubleJumpBoxSprite = $CanvasLayer/BoxContainer/DemoDoubleJumpBox
 @onready var DemoWallJumpingBoxSprite = $CanvasLayer/BoxContainer/DemoWallJumpingBox
-
+@onready var attackSprite = $AnimatedSprite2D/attackSprite
 
 signal healthChanged
 	
@@ -28,6 +28,7 @@ const ACCELERATION_x = SPEED * 7 # increase to max speed in 1/7th of a second
 const ACCELERATION_y =200
 const MAX_ACCELERATION_y = 2000
 const MAXHEALTH = 5
+const ATTACK_KNOCKBACK = 500
 
 var jumping = 0 #IS JUMPING ?
 var fall_acceleration = 0.0 #stores fall acc
@@ -40,6 +41,8 @@ var defaultSprite = preload("res://assets/icon.svg")
 var attacking = false
 var canDoubleJump = false
 var currentState = playerStates.IDLE
+var colisionCheck = false
+var healtCheck = false
 
 var doubleJumpActive = false
 var wallJumpActive = false
@@ -57,6 +60,8 @@ func _ready():
 	DemoWallJumpingBoxSprite.hide()
 	DemoDoubleJumpBoxSprite.hide()
 	DemoDashBoxSprite.hide()
+	
+	attackSprite.hide()
 	
 func _physics_process(delta: float):
 	match currentState:
@@ -197,7 +202,8 @@ func wall_sliding():
 
 #DAMAGE FUNC
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if area.name == "damageArea" and hurtBoxCol.disabled == false:
+	if area.name == "damageArea" and hurtBoxCol.disabled == false and healtCheck == false:
+		healtCheck = true
 		currentHealth -= 1
 		if currentHealth < 0:
 			currentHealth = MAXHEALTH
@@ -206,7 +212,8 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 		frameFreeze()
 		#Sin esto inmortalHit superpone al frameFreeze
 		await get_tree().create_timer(0.2, true, false, true).timeout
-		inmortalHit() 
+		inmortalHit()
+		healtCheck = false
 		
 #knockBack FUNC	
 func knockBack():
@@ -278,36 +285,51 @@ func attack():
 	velocity.x = 0  # Stop horizontal movement briefly
 	if direction != 0:
 		last_dir = direction
+	
 	# Check if attacking upward
 	if Input.is_action_pressed("ui_up"):
 		attackCol.position = Vector2(0, -50)  # Move hitbox above
-		attackCol.rotation_degrees = 90  # No need to rotate
-
+		attackCol.rotation_degrees = 0  # No need to rotate
+		attackSprite.position = Vector2(0, -50)  # Attack to the left
+		if !attackSprite.flip_h:
+			attackSprite.rotation_degrees = -90
+		else:
+			attackSprite.rotation_degrees = 90
+	
 	# Check if attacking downward (only in air)
 	elif Input.is_action_pressed("ui_down") and !is_on_floor():
 		attackCol.position = Vector2(0, 50)  # Move hitbox below
-		attackCol.rotation_degrees = 90
-		
-		
+		attackCol.rotation_degrees = 0
+		attackSprite.position = Vector2(0, 50)  # Move hitbox below
+		if attackSprite.flip_h:
+			attackSprite.rotation_degrees = -90
+		else:
+			attackSprite.rotation_degrees = 90
 	# Default attack (left or right)
 	else:
 		# Use last_dir if no movement input
 		if last_dir == 1:
 			attackCol.position = Vector2(40, 0)  # Attack to the right
-			attackCol.rotation_degrees = 0
+			attackCol.rotation_degrees = 90
+			attackSprite.flip_h = false
+			attackSprite.position = Vector2(40, 0)  # Attack to the right
+			attackSprite.rotation_degrees = 0
 		elif last_dir == -1:
 			attackCol.position = Vector2(-40, 0)  # Attack to the left
-			attackCol.rotation_degrees = 0
+			attackCol.rotation_degrees = 90
+			attackSprite.flip_h = true
+			attackSprite.position = Vector2(-40, 0)  # Attack to the left
+			attackSprite.rotation_degrees = 0
 	
 	attackCol.set_deferred("disabled", false)  # Enable hitbox
 	attackTimer.start()
-
+	attackSprite.show()
 		
 func _on_attack_timeout() -> void:
 	attacking = false
 	attackCol.set_deferred("disabled", true)  # Disable hitbox
 	attackCol.position = Vector2(0, 0)  # Reset hitbox position
-	
+	attackSprite.hide()
 	# Return to the correct state
 	if !is_on_floor():
 		if velocity.y < 0:
@@ -321,11 +343,25 @@ func _on_attack_timeout() -> void:
 			currentState = playerStates.IDLE
 
 func _on_attack_area_area_entered(area: Area2D) -> void:
-	if area.name == "damageArea" and !attackCol.disabled:
+	var direction := Input.get_axis("ui_left", "ui_right")
+	if direction != 0:
+		last_dir = direction
+	
+	if area.name == "damageArea" and !attackCol.disabled and colisionCheck == false:
 		canDoubleJump = true
+		colisionCheck = true
 		# Only bounce if the player is attacking downward (so pogo effect is relevant)
-		if velocity.y > 0 and Input.is_action_pressed("ui_down"):  # Ensure you're falling (attacking downward)
-			velocity.y = -600
+		if velocity.y > 0 and Input.is_action_pressed("ui_down"):  # Downward attack (pogo)
+			velocity.y = -ATTACK_KNOCKBACK * 1.2
+		elif Input.is_action_pressed("ui_up"):  # Upward attack, no knockback applied
+			pass
+		elif !Input.is_action_pressed("ui_down"):  # Regular attack, apply horizontal knockback
+			if last_dir == 1:
+				velocity.x = -ATTACK_KNOCKBACK
+			elif last_dir == -1:
+				velocity.x = ATTACK_KNOCKBACK
+
+		colisionCheck = false
 
 func _on_interact_area_area_entered(area: Area2D) -> void:
 	
