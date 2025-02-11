@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://ca7r200x4ljon"]
+[gd_scene load_steps=41 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_aiyym"]
 [ext_resource type="PackedScene" uid="uid://bio4rgcpm2yfr" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://br6rqy1qr7d03" path="res://assets/knight-sprite/Attack.png" id="3_s1i6c"]
 [ext_resource type="Texture2D" uid="uid://docx7d512tb2a" path="res://assets/knight-sprite/Roll.png" id="5_3m2h8"]
 [ext_resource type="Texture2D" uid="uid://c3h1c5u6djkjc" path="res://assets/knight-sprite/Run.png" id="6_1awkv"]
+[ext_resource type="Script" path="res://boxContainer.gd" id="7_0djum"]
+[ext_resource type="Texture2D" uid="uid://88egfyhx36st" path="res://assets/demoDashBox.png" id="8_gb30l"]
+[ext_resource type="Texture2D" uid="uid://g8n43fvmh30g" path="res://assets/demoDoubleJumpBox.png" id="9_hyk86"]
+[ext_resource type="Texture2D" uid="uid://cosnyxcmt0bj5" path="res://assets/demoWallJumpingBox.png" id="10_ay8gs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0vcbl"]
 atlas = ExtResource("3_s1i6c")
@@ -395,6 +399,32 @@ drag_bottom_margin = 0.02
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="heartsCont" parent="CanvasLayer" instance=ExtResource("3_0cc4d")]
+
+[node name="BoxContainer" type="BoxContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -68.0
+offset_right = 200.0
+offset_bottom = -26.0
+grow_vertical = 0
+script = ExtResource("7_0djum")
+
+[node name="DemoDashBox" type="Sprite2D" parent="CanvasLayer/BoxContainer"]
+position = Vector2(28, 20)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_gb30l")
+
+[node name="DemoDoubleJumpBox" type="Sprite2D" parent="CanvasLayer/BoxContainer"]
+position = Vector2(79, 20)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_hyk86")
+
+[node name="DemoWallJumpingBox" type="Sprite2D" parent="CanvasLayer/BoxContainer"]
+position = Vector2(132, 20)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_ay8gs")
 
 [node name="attackArea" type="Area2D" parent="."]
 position = Vector2(0, -3)

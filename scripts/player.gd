@@ -11,6 +11,11 @@ extends CharacterBody2D
 @onready var attackArea = $attackArea
 @onready var attackCol = $attackArea/CollisionShape2D
 @onready var attackTimer = $attack
+@onready var ActiveBoxContainer = $mechanicsActive/BoxContainer
+@onready var DemoDashBoxSprite = $CanvasLayer/BoxContainer/DemoDashBox
+@onready var DemoDoubleJumpBoxSprite = $CanvasLayer/BoxContainer/DemoDoubleJumpBox
+@onready var DemoWallJumpingBoxSprite = $CanvasLayer/BoxContainer/DemoWallJumpingBox
+
 
 signal healthChanged
 	
@@ -48,6 +53,10 @@ func _ready():
 	heartsContainer.setMaxHeart(MAXHEALTH)
 	heartsContainer.updateHeart(currentHealth)
 	healthChanged.connect(heartsContainer.updateHeart)
+	
+	DemoWallJumpingBoxSprite.hide()
+	DemoDoubleJumpBoxSprite.hide()
+	DemoDashBoxSprite.hide()
 	
 func _physics_process(delta: float):
 	match currentState:
@@ -315,14 +324,18 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 	if area.name == "damageArea" and !attackCol.disabled:
 		canDoubleJump = true
 		# Only bounce if the player is attacking downward (so pogo effect is relevant)
-		if velocity.y > 0:  # Ensure you're falling (attacking downward)
+		if velocity.y > 0 and Input.is_action_pressed("ui_down"):  # Ensure you're falling (attacking downward)
 			velocity.y = -600
 
 func _on_interact_area_area_entered(area: Area2D) -> void:
+	
 	if area.name == "demoDoubleJumpBoxArea":
 		doubleJumpActive = true
+		DemoDoubleJumpBoxSprite.show()
 	elif area.name == "demoWallJumpBoxArea":
 		wallJumpActive = true
+		DemoWallJumpingBoxSprite.show()
 	elif area.name == "demoDashBoxArea":
 		dashActive = true
+		DemoDashBoxSprite.show()
 	
