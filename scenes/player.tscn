@@ -349,7 +349,7 @@ radius = 22.0
 height = 66.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jb1n3"]
-size = Vector2(18, 7)
+size = Vector2(6, 6.5)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_aiyym")
@@ -357,6 +357,7 @@ script = ExtResource("1_aiyym")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3yw3j")
 animation = &"attack"
+frame = 1
 
 [node name="attackSprite" type="Sprite2D" parent="AnimatedSprite2D"]
 position = Vector2(-46, -1)
