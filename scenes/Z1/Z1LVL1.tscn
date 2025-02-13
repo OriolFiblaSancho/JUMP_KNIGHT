@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bw3tbgvpgi31b"]
+
+[ext_resource type="Texture2D" uid="uid://bracv67xi45v4" path="res://assets/dungeon/Dungeon Tile Set.png" id="1_cx3t2"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g08vw"]
+texture = ExtResource("1_cx3t2")
+12:2/0 = 0
+12:1/0 = 0
+13:2/0 = 0
+13:3/0 = 0
+13:1/0 = 0
+12:3/0 = 0
+0:1/size_in_atlas = Vector2i(12, 7)
+0:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_6tnew"]
+sources/4 = SubResource("TileSetAtlasSource_g08vw")
+
+[node name="Z1LVL1" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray(0, 0, 6, 0, 4, 0, 4, 0, 0, 0, 1, 0, 0, 0)
+tile_set = SubResource("TileSet_6tnew")

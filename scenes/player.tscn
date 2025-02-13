@@ -1,7 +1,7 @@
-[gd_scene load_steps=43 format=3 uid="uid://ca7r200x4ljon"]
+[gd_scene load_steps=45 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_aiyym"]
-[ext_resource type="PackedScene" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
+[ext_resource type="PackedScene" uid="uid://bio4rgcpm2yfr" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
 [ext_resource type="Texture2D" uid="uid://cqd53f3spruu4" path="res://assets/knight-sprite/Idle.png" id="3_4ely7"]
 [ext_resource type="Texture2D" uid="uid://br6rqy1qr7d03" path="res://assets/knight-sprite/Attack.png" id="3_s1i6c"]
 [ext_resource type="Texture2D" uid="uid://docx7d512tb2a" path="res://assets/knight-sprite/Roll.png" id="5_3m2h8"]
@@ -11,6 +11,13 @@
 [ext_resource type="Texture2D" uid="uid://88egfyhx36st" path="res://assets/demoDashBox.png" id="8_gb30l"]
 [ext_resource type="Texture2D" uid="uid://g8n43fvmh30g" path="res://assets/demoDoubleJumpBox.png" id="9_hyk86"]
 [ext_resource type="Texture2D" uid="uid://cosnyxcmt0bj5" path="res://assets/demoWallJumpingBox.png" id="10_ay8gs"]
+
+[sub_resource type="Curve" id="Curve_y0bfb"]
+_data = [Vector2(1e-05, 0.263736), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_ogdis"]
+colors = PackedColorArray(0.884058, 0.884058, 0.884058, 1, 1, 1, 1, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0vcbl"]
 atlas = ExtResource("3_s1i6c")
@@ -349,10 +356,24 @@ radius = 22.0
 height = 66.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jb1n3"]
-size = Vector2(19, 6.25)
+size = Vector2(20.5, 7.03125)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_aiyym")
+
+[node name="walkingParticles" type="CPUParticles2D" parent="."]
+position = Vector2(-2, 29)
+amount = 14
+lifetime = 0.05
+direction = Vector2(1, -5)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.29
+initial_velocity_max = 101.0
+scale_amount_min = 4.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_y0bfb")
+color_ramp = SubResource("Gradient_ogdis")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3yw3j")
@@ -455,8 +476,8 @@ shape = SubResource("CapsuleShape2D_8rlgb")
 
 [node name="floorArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="floorArea"]
-position = Vector2(-1.5, 28)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="floorArea"]
+position = Vector2(-2, 28.4844)
 shape = SubResource("RectangleShape2D_jb1n3")
 
 [connection signal="timeout" from="dashing" to="." method="_on_dashing_timeout"]

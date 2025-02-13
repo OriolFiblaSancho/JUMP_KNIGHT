@@ -16,6 +16,7 @@ extends CharacterBody2D
 @onready var DemoDoubleJumpBoxSprite = $CanvasLayer/BoxContainer/DemoDoubleJumpBox
 @onready var DemoWallJumpingBoxSprite = $CanvasLayer/BoxContainer/DemoWallJumpingBox
 @onready var attackSprite = $AnimatedSprite2D/attackSprite
+@onready var walkingParticles = $walkingParticles
 
 signal healthChanged
 	
@@ -63,6 +64,8 @@ func _ready():
 	
 	attackSprite.hide()
 	
+	walkingParticles.emitting = false
+
 func _physics_process(delta: float):
 	match currentState:
 		playerStates.IDLE:
@@ -85,6 +88,10 @@ func _physics_process(delta: float):
 	if direction != 0:
 		last_dir = direction
 	
+	if is_on_floor() and abs(velocity.x) > 10 and currentState != playerStates.DASH:
+		walkingParticles.emitting = true
+	else:
+		walkingParticles.emitting = false
 	
 	# GRAVITY HANDLING
 	if not is_on_floor() and !dashing:
@@ -117,6 +124,7 @@ func _physics_process(delta: float):
 	#HANDLES JUMP THINGS
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() || !coyote_time.is_stopped():	#HANDLES JUMP and coyote time
+
 			velocity.y = JUMP_VELOCITY
 			jumping = 1
 			canDoubleJump = true
@@ -130,8 +138,8 @@ func _physics_process(delta: float):
 				double_jump()
 			else:
 				pass
-			
-			
+		else:
+			pass
 	
 			
 	#WALL SLIDING
