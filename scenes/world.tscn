@@ -1549,6 +1549,9 @@ position = Vector2(181, 2158)
 [node name="DisappearingPlatform" parent="." instance=ExtResource("8_ftg3h")]
 position = Vector2(341, 2713)
 
+[node name="DisappearingPlatform2" parent="." instance=ExtResource("8_ftg3h")]
+position = Vector2(620, 2636)
+
 [node name="movingSpikes" parent="." instance=ExtResource("9_q2hxp")]
 position = Vector2(509, 2758)
 scale = Vector2(1.5, 1.5)
@@ -1556,7 +1559,7 @@ pos = Vector2(0, -200)
 vel = 1.0
 
 [node name="movingSpikes2" parent="." instance=ExtResource("9_q2hxp")]
-position = Vector2(646, 2552)
+position = Vector2(790, 2557)
 scale = Vector2(1.5, 1.5)
 pos = Vector2(0, 200)
 vel = 1.0
