@@ -1,7 +1,7 @@
 [gd_scene load_steps=45 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_aiyym"]
-[ext_resource type="PackedScene" uid="uid://bio4rgcpm2yfr" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
+[ext_resource type="PackedScene" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
 [ext_resource type="Texture2D" uid="uid://cqd53f3spruu4" path="res://assets/knight-sprite/Idle.png" id="3_4ely7"]
 [ext_resource type="Texture2D" uid="uid://br6rqy1qr7d03" path="res://assets/knight-sprite/Attack.png" id="3_s1i6c"]
 [ext_resource type="Texture2D" uid="uid://docx7d512tb2a" path="res://assets/knight-sprite/Roll.png" id="5_3m2h8"]
