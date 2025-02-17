@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://ci4qec4ryh2tj"]
+
+[ext_resource type="Script" path="res://scripts/Z1/doorZ1.gd" id="1_jon6l"]
+[ext_resource type="Texture2D" uid="uid://bracv67xi45v4" path="res://assets/dungeon/Dungeon Tile Set.png" id="1_o2kbp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pyqre"]
+size = Vector2(28, 118)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m6qan"]
+size = Vector2(22, 122)
+
+[node name="doorZ1" type="StaticBody2D"]
+script = ExtResource("1_jon6l")
+
+[node name="openDoorArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="openDoorArea"]
+position = Vector2(-17, 2)
+shape = SubResource("RectangleShape2D_pyqre")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -3.00001)
+scale = Vector2(1, 1.0625)
+texture = ExtResource("1_o2kbp")
+hframes = 15
+vframes = 9
+frame = 87
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-17, 3)
+shape = SubResource("RectangleShape2D_m6qan")
+disabled = true
+
+[connection signal="area_entered" from="openDoorArea" to="." method="_on_open_door_area_area_entered"]

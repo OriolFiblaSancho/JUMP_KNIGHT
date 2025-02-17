@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bsh3gkcji1rw5"]
+[gd_scene load_steps=7 format=3 uid="uid://darf3dmjoxyvv"]
 
-[ext_resource type="Script" path="res://scripts/disappearingPlatform.gd" id="1_l7adt"]
-[ext_resource type="Texture2D" uid="uid://b6fr3pifnmx1g" path="res://assets/demoPlatform.png" id="2_uxk5l"]
+[ext_resource type="Script" path="res://scripts/disappearingPlatform.gd" id="1_n0k8w"]
+[ext_resource type="Texture2D" uid="uid://y3dfh3mru7ok" path="res://assets/dungeon/dissapearingPlatormZ1.png" id="2_thhsg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kf7mg"]
 size = Vector2(105, 39.75)
@@ -66,20 +66,21 @@ _data = {
 "dissapear": SubResource("Animation_wyi5s")
 }
 
-[node name="DisappearingPlatform" type="StaticBody2D"]
-script = ExtResource("1_l7adt")
+[node name="DisappearingPlatformZ1" type="StaticBody2D"]
+script = ExtResource("1_n0k8w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_uxk5l")
+position = Vector2(48, 37)
+texture = ExtResource("2_thhsg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 16)
+position = Vector2(4.5, 25.125)
 shape = SubResource("RectangleShape2D_kf7mg")
 
 [node name="body" type="Area2D" parent="."]
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="body"]
-position = Vector2(0, 16)
+position = Vector2(4, 25)
 shape = SubResource("RectangleShape2D_kf7mg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

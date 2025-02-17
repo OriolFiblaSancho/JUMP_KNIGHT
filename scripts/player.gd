@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var camera = $Camera2D
 @onready var playerSprite = $AnimatedSprite2D
 @onready var playerAnim = $anim
 @onready var rayWall = $RayWall
@@ -17,6 +18,11 @@ extends CharacterBody2D
 @onready var DemoWallJumpingBoxSprite = $CanvasLayer/BoxContainer/DemoWallJumpingBox
 @onready var attackSprite = $AnimatedSprite2D/attackSprite
 @onready var walkingParticles = $walkingParticles
+
+@export var cameraLimitLeft: int = 0
+@export var cameraLimitRight: int = 0
+@export var cameraLimitTop: int = 0
+@export var cameraLimitBottom: int = 0
 
 signal healthChanged
 	
@@ -65,6 +71,12 @@ func _ready():
 	attackSprite.hide()
 	
 	walkingParticles.emitting = false
+	
+	camera.limit_left = cameraLimitLeft
+	camera.limit_right = cameraLimitRight
+	camera.limit_top = cameraLimitTop
+	camera.limit_bottom = cameraLimitBottom
+	camera.limit_smoothed = true
 
 func _physics_process(delta: float):
 	match currentState:

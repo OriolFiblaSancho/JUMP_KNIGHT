@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvvy80mbolb44"]
+
+[ext_resource type="Script" path="res://scripts/movingSpikes.gd" id="1_2rxsh"]
+[ext_resource type="Texture2D" uid="uid://d4f4btsaqufb2" path="res://assets/dungeon/movingSpikeZ1.png" id="2_d18hj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_he380"]
+radius = 64.0312
+
+[node name="movingSpikes" type="CharacterBody2D"]
+script = ExtResource("1_2rxsh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.0472
+texture = ExtResource("2_d18hj")
+
+[node name="damageArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="damageArea"]
+shape = SubResource("CircleShape2D_he380")
