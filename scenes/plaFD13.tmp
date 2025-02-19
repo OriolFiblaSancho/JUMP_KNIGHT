@@ -1,6 +1,7 @@
 [gd_scene load_steps=45 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_aiyym"]
+[ext_resource type="PackedScene" uid="uid://bio4rgcpm2yfr" path="res://scenes/hearts_cont.tscn" id="3_0cc4d"]
 [ext_resource type="Texture2D" uid="uid://cqd53f3spruu4" path="res://assets/knight-sprite/Idle.png" id="3_4ely7"]
 [ext_resource type="Texture2D" uid="uid://br6rqy1qr7d03" path="res://assets/knight-sprite/Attack.png" id="3_s1i6c"]
 [ext_resource type="Texture2D" uid="uid://docx7d512tb2a" path="res://assets/knight-sprite/Roll.png" id="5_3m2h8"]
@@ -17,10 +18,6 @@ point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_ogdis"]
 colors = PackedColorArray(0.884058, 0.884058, 0.884058, 1, 1, 1, 1, 0)
-
-[sub_resource type="Curve" id="Curve_e8kfs"]
-_data = [Vector2(0, 0.461538), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0vcbl"]
 atlas = ExtResource("3_s1i6c")
@@ -378,20 +375,6 @@ scale_amount_max = 4.0
 scale_amount_curve = SubResource("Curve_y0bfb")
 color_ramp = SubResource("Gradient_ogdis")
 
-[node name="deathParticles" type="CPUParticles2D" parent="."]
-emitting = false
-amount = 100
-lifetime = 0.8
-explosiveness = 0.25
-direction = Vector2(0, -1)
-spread = 70.91
-gravity = Vector2(0, 0)
-initial_velocity_min = 391.92
-initial_velocity_max = 604.04
-scale_amount_min = 7.0
-scale_amount_max = 11.0
-scale_amount_curve = SubResource("Curve_e8kfs")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3yw3j")
 animation = &"attack"
@@ -441,6 +424,8 @@ drag_right_margin = 0.02
 drag_bottom_margin = 0.02
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="heartsCont" parent="CanvasLayer" instance=ExtResource("3_0cc4d")]
 
 [node name="BoxContainer" type="BoxContainer" parent="CanvasLayer"]
 anchors_preset = 2

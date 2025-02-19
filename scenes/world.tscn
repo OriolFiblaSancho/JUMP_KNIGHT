@@ -36,7 +36,11 @@ position = Vector2(896, 1600)
 metadata/_edit_lock_ = true
 
 [node name="player" parent="." instance=ExtResource("1_oq2ni")]
-position = Vector2(501, 2992)
+position = Vector2(175, 2625)
+cameraLimitLeft = -1000000
+cameraLimitRight = 1000000
+cameraLimitTop = -1000000
+cameraLimitBottom = 1000000
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_vysc7")

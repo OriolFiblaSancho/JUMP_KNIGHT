@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbyynfbtlgtf6"]
+
+[ext_resource type="Texture2D" uid="uid://y3dfh3mru7ok" path="res://assets/dungeon/dissapearingPlatormZ1.png" id="1_f3adb"]
+[ext_resource type="Script" path="res://scripts/Z1/movingPlataformZ1.gd" id="1_kjbwm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0cwrf"]
+size = Vector2(96, 16)
+
+[node name="movingPlatformZ1" type="AnimatableBody2D"]
+script = ExtResource("1_kjbwm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(46, 0)
+texture = ExtResource("1_f3adb")
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_0cwrf")

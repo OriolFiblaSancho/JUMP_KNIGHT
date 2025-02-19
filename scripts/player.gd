@@ -5,7 +5,6 @@ extends CharacterBody2D
 @onready var playerAnim = $anim
 @onready var rayWall = $RayWall
 @onready var coyote_time = $CoyoteTime
-@onready var heartsContainer = $CanvasLayer/heartsCont
 @onready var hurtBoxCol = $hurtBox/CollisionShape2D
 @onready var dashTimer = $dashAgain
 @onready var dashingTimer = $dashing
@@ -18,6 +17,7 @@ extends CharacterBody2D
 @onready var DemoWallJumpingBoxSprite = $CanvasLayer/BoxContainer/DemoWallJumpingBox
 @onready var attackSprite = $AnimatedSprite2D/attackSprite
 @onready var walkingParticles = $walkingParticles
+@onready var deathParticles = $deathParticles
 
 @export var cameraLimitLeft: int = 0
 @export var cameraLimitRight: int = 0
@@ -34,7 +34,7 @@ const WALL_SLIDE_MAX = 300
 const ACCELERATION_x = SPEED * 7 # increase to max speed in 1/7th of a second
 const ACCELERATION_y =200
 const MAX_ACCELERATION_y = 2000
-const MAXHEALTH = 5
+const MAXHEALTH = 1
 const ATTACK_KNOCKBACK = 500
 
 var jumping = 0 #IS JUMPING ?
@@ -43,7 +43,7 @@ var debug_counter = 0
 var last_dir = 1
 var dashing = false
 var canDash = true
-var currentHealth = 5 #stores the actual health
+var currentHealth = 1 #stores the actual health
 var defaultSprite = preload("res://assets/icon.svg")
 var attacking = false
 var canDoubleJump = false
@@ -55,14 +55,13 @@ var doubleJumpActive = false
 var wallJumpActive = false
 var dashActive = false
 
+var checkpoint = Vector2(0,0)
+
 enum playerStates {IDLE, RUN, SWORD, JUMP, DASH, ATTACK, FALLING}
 
-
+var canMove = true
 
 func _ready():
-	heartsContainer.setMaxHeart(MAXHEALTH)
-	heartsContainer.updateHeart(currentHealth)
-	healthChanged.connect(heartsContainer.updateHeart)
 	
 	DemoWallJumpingBoxSprite.hide()
 	DemoDoubleJumpBoxSprite.hide()
@@ -71,6 +70,7 @@ func _ready():
 	attackSprite.hide()
 	
 	walkingParticles.emitting = false
+	deathParticles.emitting = false
 	
 	camera.limit_left = cameraLimitLeft
 	camera.limit_right = cameraLimitRight
@@ -96,6 +96,8 @@ func _physics_process(delta: float):
 	var direction := Input.get_axis("ui_left", "ui_right")
 	var was_on_floor = is_on_floor()
 	var falling = velocity.y 
+	
+	
 	
 	if direction != 0:
 		last_dir = direction
@@ -136,7 +138,6 @@ func _physics_process(delta: float):
 	#HANDLES JUMP THINGS
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() || !coyote_time.is_stopped():	#HANDLES JUMP and coyote time
-
 			velocity.y = JUMP_VELOCITY
 			jumping = 1
 			canDoubleJump = true
@@ -166,8 +167,9 @@ func _physics_process(delta: float):
 		rayWall.scale.x = -1
 		
 		
-		
-	velocity.x = move_toward(velocity.x, direction * SPEED, ACCELERATION_x * delta)
+	if canMove:
+		velocity.x = move_toward(velocity.x, direction * SPEED, ACCELERATION_x * delta)
+	
 	if last_dir == 1:
 		playerSprite.flip_h = true
 	elif last_dir == -1:
@@ -196,6 +198,7 @@ func _physics_process(delta: float):
 	print("IS - ",is_on_floor())
 	print("CURRENT - ", currentState)
 	print("ATTACK -", attacking)
+	print("Position -", position)
 	debug_counter += 1
 	#---------------------------------------------------	
 	
@@ -222,18 +225,41 @@ func wall_sliding():
 
 #DAMAGE FUNC
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if area.name == "damageArea" and hurtBoxCol.disabled == false and healtCheck == false:
-		healtCheck = true
-		currentHealth -= 1
-		if currentHealth < 0:
-			currentHealth = MAXHEALTH
-		healthChanged.emit(currentHealth) #Emits the actual health to the counter
-		knockBack()
-		frameFreeze()
-		#Sin esto inmortalHit superpone al frameFreeze
-		await get_tree().create_timer(0.2, true, false, true).timeout
-		inmortalHit()
-		healtCheck = false
+	if hurtBoxCol.disabled == false and healtCheck == false:
+		if area.name == "damageArea":
+			healtCheck = true
+			currentHealth -= 1
+			if currentHealth <= 0:
+				
+				#knockBack()
+				frameFreeze()
+				#Sin esto inmortalHit superpone al frameFreeze
+				await get_tree().create_timer(0.2, true, false, true).timeout
+				inmortalHit()
+				healtCheck = false
+				position = checkpoint
+			
+		elif area.name == "restartArea":
+			healtCheck = true
+			currentHealth -= 1
+			if currentHealth <= 0:
+				canMove = false
+				velocity.x = 0
+				currentHealth = MAXHEALTH
+				deathParticles.emitting = true
+				await get_tree().create_timer(0.8, true, false, true).timeout
+				deathParticles.emitting = false
+				position = checkpoint
+				canMove = true
+			#knockBack()
+			frameFreeze()
+			#Sin esto inmortalHit superpone al frameFreeze
+			
+			await get_tree().create_timer(0.2, true, false, true).timeout
+			
+			inmortalHit()
+			healtCheck = false
+		
 		
 #knockBack FUNC	
 func knockBack():
@@ -394,4 +420,5 @@ func _on_interact_area_area_entered(area: Area2D) -> void:
 	elif area.name == "demoDashBoxArea":
 		dashActive = true
 		DemoDashBoxSprite.show()
-	
+	elif area.name == "checkpointCol":
+		checkpoint = area.global_position
