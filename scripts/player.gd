@@ -12,12 +12,13 @@ extends CharacterBody2D
 @onready var attackCol = $attackArea/CollisionShape2D
 @onready var attackTimer = $attack
 @onready var ActiveBoxContainer = $mechanicsActive/BoxContainer
-@onready var DemoDashBoxSprite = $CanvasLayer/BoxContainer/DemoDashBox
-@onready var DemoDoubleJumpBoxSprite = $CanvasLayer/BoxContainer/DemoDoubleJumpBox
-@onready var DemoWallJumpingBoxSprite = $CanvasLayer/BoxContainer/DemoWallJumpingBox
+@onready var DemoDashBoxSprite = $ui/BoxContainer/DemoDashBox
+@onready var DemoDoubleJumpBoxSprite = $ui/BoxContainer/DemoDoubleJumpBox
+@onready var DemoWallJumpingBoxSprite = $ui/BoxContainer/DemoWallJumpingBox
 @onready var attackSprite = $AnimatedSprite2D/attackSprite
 @onready var walkingParticles = $walkingParticles
 @onready var deathParticles = $deathParticles
+@onready var deathCountLabel = $ui/deathCounter/Label
 
 @export var cameraLimitLeft: int = 0
 @export var cameraLimitRight: int = 0
@@ -62,7 +63,6 @@ enum playerStates {IDLE, RUN, SWORD, JUMP, DASH, ATTACK, FALLING}
 var canMove = true
 
 func _ready():
-	
 	DemoWallJumpingBoxSprite.hide()
 	DemoDoubleJumpBoxSprite.hide()
 	DemoDashBoxSprite.hide()
@@ -172,8 +172,12 @@ func _physics_process(delta: float):
 	
 	if last_dir == 1:
 		playerSprite.flip_h = true
+		var tween = create_tween()
+		tween.tween_property(camera,"offset:x", 100, 0.5) # 0.3s transitionm
 	elif last_dir == -1:
 		playerSprite.flip_h = false
+		var tween = create_tween()
+		tween.tween_property(camera,"offset:x", -100, 0.5) # 0.3s transitionm
 		
 
 	dash()
@@ -227,6 +231,7 @@ func wall_sliding():
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if hurtBoxCol.disabled == false and healtCheck == false:
 		if area.name == "damageArea":
+			deathCountLabel.text = str(int(deathCountLabel.text) + 1)
 			healtCheck = true
 			currentHealth -= 1
 			if currentHealth <= 0:
@@ -240,6 +245,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 				position = checkpoint
 			
 		elif area.name == "restartArea":
+			deathCountLabel.text = str(int(deathCountLabel.text) + 1)
 			healtCheck = true
 			currentHealth -= 1
 			if currentHealth <= 0:

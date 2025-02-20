@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://ca7r200x4ljon"]
+[gd_scene load_steps=49 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_aiyym"]
 [ext_resource type="Texture2D" uid="uid://cqd53f3spruu4" path="res://assets/knight-sprite/Idle.png" id="3_4ely7"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://88egfyhx36st" path="res://assets/demoDashBox.png" id="8_gb30l"]
 [ext_resource type="Texture2D" uid="uid://g8n43fvmh30g" path="res://assets/demoDoubleJumpBox.png" id="9_hyk86"]
 [ext_resource type="Texture2D" uid="uid://cosnyxcmt0bj5" path="res://assets/demoWallJumpingBox.png" id="10_ay8gs"]
+[ext_resource type="Script" path="res://scripts/showFPS.gd" id="11_6eohe"]
+[ext_resource type="Texture2D" uid="uid://djjumgicfws63" path="res://assets/deathCounter.png" id="12_plsk1"]
+[ext_resource type="FontFile" uid="uid://dqgt7v0o7b8qy" path="res://assets/fonts/Monocraft.ttf" id="13_bkpph"]
 
 [sub_resource type="Curve" id="Curve_y0bfb"]
 _data = [Vector2(1e-05, 0.263736), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -346,6 +349,10 @@ _data = {
 radius = 18.0
 height = 60.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_5anl0"]
+font = ExtResource("13_bkpph")
+font_size = 24
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5weh3"]
 radius = 17.0
 height = 59.0
@@ -440,9 +447,9 @@ drag_top_margin = 0.02
 drag_right_margin = 0.02
 drag_bottom_margin = 0.02
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="ui" type="CanvasLayer" parent="."]
 
-[node name="BoxContainer" type="BoxContainer" parent="CanvasLayer"]
+[node name="BoxContainer" type="BoxContainer" parent="ui"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -453,20 +460,58 @@ offset_bottom = -26.0
 grow_vertical = 0
 script = ExtResource("7_0djum")
 
-[node name="DemoDashBox" type="Sprite2D" parent="CanvasLayer/BoxContainer"]
+[node name="DemoDashBox" type="Sprite2D" parent="ui/BoxContainer"]
 position = Vector2(28, 20)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_gb30l")
 
-[node name="DemoDoubleJumpBox" type="Sprite2D" parent="CanvasLayer/BoxContainer"]
+[node name="DemoDoubleJumpBox" type="Sprite2D" parent="ui/BoxContainer"]
 position = Vector2(79, 20)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_hyk86")
 
-[node name="DemoWallJumpingBox" type="Sprite2D" parent="CanvasLayer/BoxContainer"]
+[node name="DemoWallJumpingBox" type="Sprite2D" parent="ui/BoxContainer"]
 position = Vector2(132, 20)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("10_ay8gs")
+
+[node name="fpsCounter" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1346.0
+offset_top = 16.0
+offset_right = 1423.0
+offset_bottom = 84.0
+script = ExtResource("11_6eohe")
+
+[node name="Label" type="Label" parent="ui/fpsCounter"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = -1.0
+offset_right = 87.0
+offset_bottom = 22.0
+text = "23"
+
+[node name="deathCounter" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 26.0
+offset_top = 27.0
+offset_right = 104.0
+offset_bottom = 93.0
+
+[node name="Sprite2D" type="Sprite2D" parent="ui/deathCounter"]
+position = Vector2(19, 17)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("12_plsk1")
+
+[node name="Label" type="Label" parent="ui/deathCounter"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 6.0
+offset_right = 88.0
+offset_bottom = 40.0
+label_settings = SubResource("LabelSettings_5anl0")
 
 [node name="hurtBox" type="Area2D" parent="."]
 visible = false
