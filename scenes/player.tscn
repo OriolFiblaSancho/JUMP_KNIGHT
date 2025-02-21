@@ -511,6 +511,7 @@ offset_left = 48.0
 offset_top = 6.0
 offset_right = 88.0
 offset_bottom = 40.0
+text = "0"
 label_settings = SubResource("LabelSettings_5anl0")
 
 [node name="hurtBox" type="Area2D" parent="."]

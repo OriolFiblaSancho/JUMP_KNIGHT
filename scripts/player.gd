@@ -62,6 +62,8 @@ enum playerStates {IDLE, RUN, SWORD, JUMP, DASH, ATTACK, FALLING}
 
 var canMove = true
 
+var deathCount = Global.deathCount
+
 func _ready():
 	DemoWallJumpingBoxSprite.hide()
 	DemoDoubleJumpBoxSprite.hide()
@@ -231,6 +233,7 @@ func wall_sliding():
 func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if hurtBoxCol.disabled == false and healtCheck == false:
 		if area.name == "damageArea":
+			deathCount += 1
 			deathCountLabel.text = str(int(deathCountLabel.text) + 1)
 			healtCheck = true
 			currentHealth -= 1
