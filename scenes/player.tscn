@@ -438,7 +438,6 @@ wait_time = 0.3
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -100)
 limit_smoothed = true
-position_smoothing_enabled = true
 position_smoothing_speed = 15.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true

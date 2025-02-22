@@ -1,4 +1,4 @@
 extends Node
 
-
-var deathCount: int
+var playerPosition: Vector2 = Vector2.ZERO
+var deathCount: int = 0

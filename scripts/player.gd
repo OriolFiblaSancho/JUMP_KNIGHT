@@ -62,7 +62,7 @@ enum playerStates {IDLE, RUN, SWORD, JUMP, DASH, ATTACK, FALLING}
 
 var canMove = true
 
-var deathCount = Global.deathCount
+var deathCount = 0
 
 func _ready():
 	DemoWallJumpingBoxSprite.hide()
@@ -79,7 +79,13 @@ func _ready():
 	camera.limit_top = cameraLimitTop
 	camera.limit_bottom = cameraLimitBottom
 	camera.limit_smoothed = true
-
+	
+	if Global.playerPosition != Vector2.ZERO:
+		position = Global.playerPosition
+	
+	deathCount = Global.deathCount
+	
+	deathCountLabel.text = str(deathCount)
 func _physics_process(delta: float):
 	match currentState:
 		playerStates.IDLE:
@@ -234,7 +240,7 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 	if hurtBoxCol.disabled == false and healtCheck == false:
 		if area.name == "damageArea":
 			deathCount += 1
-			deathCountLabel.text = str(int(deathCountLabel.text) + 1)
+			deathCountLabel.text = str(deathCount)
 			healtCheck = true
 			currentHealth -= 1
 			if currentHealth <= 0:
@@ -248,7 +254,8 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 				position = checkpoint
 			
 		elif area.name == "restartArea":
-			deathCountLabel.text = str(int(deathCountLabel.text) + 1)
+			deathCount += 1
+			deathCountLabel.text = str(deathCount)
 			healtCheck = true
 			currentHealth -= 1
 			if currentHealth <= 0:
