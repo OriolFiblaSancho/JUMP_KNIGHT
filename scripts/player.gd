@@ -244,7 +244,6 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 			healtCheck = true
 			currentHealth -= 1
 			if currentHealth <= 0:
-				
 				#knockBack()
 				frameFreeze()
 				#Sin esto inmortalHit superpone al frameFreeze
@@ -414,7 +413,7 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 		colisionCheck = true
 		# Only bounce if the player is attacking downward (so pogo effect is relevant)
 		if velocity.y > 0 and Input.is_action_pressed("ui_down"):  # Downward attack (pogo)
-			velocity.y = -ATTACK_KNOCKBACK * 1.2
+			velocity.y = -ATTACK_KNOCKBACK * 1.4
 		elif Input.is_action_pressed("ui_up"):  # Upward attack, no knockback applied
 			pass
 		elif !Input.is_action_pressed("ui_down"):  # Regular attack, apply horizontal knockback
