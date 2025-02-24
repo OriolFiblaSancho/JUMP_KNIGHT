@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var sprite = $StaticBody2D/AnimatedSprite2D
-@onready var secretArea = $"../secretArea"
+@onready var secretArea = $"../../tilemaps/secretRoom1"
 var life = 2
 func _ready() -> void:
 	secretArea.enabled = true

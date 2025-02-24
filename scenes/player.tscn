@@ -358,8 +358,8 @@ radius = 17.0
 height = 59.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_olwe3"]
-radius = 31.0
-height = 122.0
+radius = 43.0
+height = 138.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8rlgb"]
 radius = 22.0
@@ -514,14 +514,12 @@ text = "0"
 label_settings = SubResource("LabelSettings_5anl0")
 
 [node name="hurtBox" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_5weh3")
 
 [node name="attackArea" type="Area2D" parent="."]
-visible = false
 position = Vector2(0, -3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attackArea"]
@@ -531,7 +529,6 @@ shape = SubResource("CapsuleShape2D_olwe3")
 disabled = true
 
 [node name="interactArea" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="interactArea"]
 shape = SubResource("CapsuleShape2D_8rlgb")
