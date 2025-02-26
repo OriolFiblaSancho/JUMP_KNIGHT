@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://bw3tbgvpgi31b"]
+[gd_scene load_steps=13 format=4 uid="uid://bw3tbgvpgi31b"]
 
 [ext_resource type="TileSet" uid="uid://d3iwboanudjiu" path="res://tileSets/Z1.tres" id="1_gygbs"]
 [ext_resource type="PackedScene" uid="uid://cc3vywoxoh5k5" path="res://scenes/Z1/spike.tscn" id="2_gvkg8"]
@@ -10,9 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://ek4ia0m427ae" path="res://scenes/restartCol.tscn" id="7_aqldu"]
 [ext_resource type="PackedScene" uid="uid://bbyynfbtlgtf6" path="res://scenes/Z1/movingPlatformZ1.tscn" id="7_ndg2r"]
 [ext_resource type="PackedScene" uid="uid://03avgrfw5jkd" path="res://scenes/changeScenes.tscn" id="10_snhhj"]
+[ext_resource type="FontFile" uid="uid://dqgt7v0o7b8qy" path="res://assets/fonts/Monocraft.ttf" id="11_m1xkx"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_qhn1o"]
-font_size = 32
+[sub_resource type="LabelSettings" id="LabelSettings_1gps5"]
+font = ExtResource("11_m1xkx")
+font_size = 45
 
 [node name="Z1LVL1" type="Node2D"]
 metadata/_edit_lock_ = true
@@ -134,6 +136,9 @@ frame = 2
 [node name="spike33" parent="danger/spikes" instance=ExtResource("2_gvkg8")]
 position = Vector2(1145, -3810)
 frame = 2
+
+[node name="spike7" parent="danger/spikes" instance=ExtResource("2_gvkg8")]
+position = Vector2(1869, -32)
 
 [node name="movingSpikes" type="Node" parent="danger"]
 
@@ -278,15 +283,6 @@ scale = Vector2(3, 3)
 position = Vector2(5263, 355)
 scale = Vector2(1.69, 1.69)
 
-[node name="Label" type="Label" parent="."]
-z_index = 1
-offset_left = 779.0
-offset_top = -4300.0
-offset_right = 995.0
-offset_bottom = -4255.0
-text = "END OF LEVEL"
-label_settings = SubResource("LabelSettings_qhn1o")
-
 [node name="limits" type="Node" parent="."]
 
 [node name="limit" type="StaticBody2D" parent="limits"]
@@ -299,3 +295,16 @@ position = Vector2(515, -4504)
 scale = Vector2(1.2, 1.2)
 nextLevel = "res://scenes/Z1/Z1LVL2.tscn"
 spawnPositionY = -4334
+
+[node name="Label" type="Label" parent="."]
+z_index = 1
+offset_left = 1502.0
+offset_top = 71.0
+offset_right = 1922.0
+offset_bottom = 200.0
+text = "POGO!!!
+DOWN ARROW + X
+"
+label_settings = SubResource("LabelSettings_1gps5")
+horizontal_alignment = 1
+vertical_alignment = 1

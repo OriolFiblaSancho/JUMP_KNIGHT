@@ -19,6 +19,8 @@ extends CharacterBody2D
 @onready var walkingParticles = $walkingParticles
 @onready var deathParticles = $deathParticles
 @onready var deathCountLabel = $ui/deathCounter/Label
+@onready var timerLabel = $ui/timer/Label
+
 
 @export var cameraLimitLeft: int = 0
 @export var cameraLimitRight: int = 0
@@ -64,6 +66,7 @@ var canMove = true
 
 var deathCount = 0
 
+
 func _ready():
 	DemoWallJumpingBoxSprite.hide()
 	DemoDoubleJumpBoxSprite.hide()
@@ -86,6 +89,7 @@ func _ready():
 	deathCount = Global.deathCount
 	
 	deathCountLabel.text = str(deathCount)
+	
 func _physics_process(delta: float):
 	match currentState:
 		playerStates.IDLE:
@@ -191,7 +195,7 @@ func _physics_process(delta: float):
 	dash()
 
 
-	
+	updateTimer()
 	move_and_slide()
 	
 	#Check if it was on floor after move_and_slide()
@@ -412,7 +416,7 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 		canDoubleJump = true
 		colisionCheck = true
 		# Only bounce if the player is attacking downward (so pogo effect is relevant)
-		if velocity.y > 0 and Input.is_action_pressed("ui_down"):  # Downward attack (pogo)
+		if Input.is_action_pressed("ui_down"):  # Downward attack (pogo)
 			velocity.y = -ATTACK_KNOCKBACK * 1.4
 		elif Input.is_action_pressed("ui_up"):  # Upward attack, no knockback applied
 			pass
@@ -437,3 +441,6 @@ func _on_interact_area_area_entered(area: Area2D) -> void:
 		DemoDashBoxSprite.show()
 	elif area.name == "checkpointCol":
 		checkpoint = area.global_position
+
+func updateTimer():
+	timerLabel.text = Global.timeToString()
