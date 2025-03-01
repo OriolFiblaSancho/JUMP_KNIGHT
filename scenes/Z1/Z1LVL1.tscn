@@ -198,7 +198,7 @@ position = Vector2(1118, 64)
 
 [node name="player" parent="." instance=ExtResource("2_qj6l0")]
 z_index = 1
-position = Vector2(672, 44)
+position = Vector2(1443, -127)
 cameraLimitRight = 5730
 cameraLimitTop = -4250
 cameraLimitBottom = 509
@@ -228,7 +228,7 @@ vel = 3.0
 [node name="checkpoints" type="Node" parent="."]
 
 [node name="checkpoints" parent="checkpoints" instance=ExtResource("7_4wkqe")]
-position = Vector2(1000, 115)
+position = Vector2(1423, -34)
 
 [node name="checkpoints2" parent="checkpoints" instance=ExtResource("7_4wkqe")]
 position = Vector2(2186, -44)

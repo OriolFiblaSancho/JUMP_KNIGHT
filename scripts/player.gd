@@ -8,8 +8,8 @@ extends CharacterBody2D
 @onready var hurtBoxCol = $hurtBox/CollisionShape2D
 @onready var dashTimer = $dashAgain
 @onready var dashingTimer = $dashing
-@onready var attackArea = $attackArea
 @onready var attackCol = $attackArea/CollisionShape2D
+@onready var attackParticles = $attackArea/CPUParticles2D
 @onready var attackTimer = $attack
 @onready var ActiveBoxContainer = $mechanicsActive/BoxContainer
 @onready var DemoDashBoxSprite = $ui/BoxContainer/DemoDashBox
@@ -107,7 +107,6 @@ func _physics_process(delta: float):
 			
 	var direction := Input.get_axis("ui_left", "ui_right")
 	var was_on_floor = is_on_floor()
-	var falling = velocity.y 
 	
 	
 	
@@ -355,6 +354,7 @@ func attack():
 	if Input.is_action_pressed("ui_up"):
 		attackCol.position = Vector2(0, -50)  # Move hitbox above
 		attackCol.rotation_degrees = 0  # No need to rotate
+		attackParticles.position = Vector2(0, -110) ##################
 		attackSprite.position = Vector2(0, -50)  # Attack to the left
 		if !attackSprite.flip_h:
 			attackSprite.rotation_degrees = -90
@@ -364,6 +364,7 @@ func attack():
 	# Check if attacking downward (only in air)
 	elif Input.is_action_pressed("ui_down") and !is_on_floor():
 		attackCol.position = Vector2(0, 50)  # Move hitbox below
+		attackParticles.position = Vector2(0,110)
 		attackCol.rotation_degrees = 0
 		attackSprite.position = Vector2(0, 50)  # Move hitbox below
 		if attackSprite.flip_h:
@@ -376,12 +377,14 @@ func attack():
 		if last_dir == 1:
 			attackCol.position = Vector2(40, 0)  # Attack to the right
 			attackCol.rotation_degrees = 90
+			attackParticles.position = Vector2(90,0)
 			attackSprite.flip_h = false
 			attackSprite.position = Vector2(40, 0)  # Attack to the right
 			attackSprite.rotation_degrees = 0
 		elif last_dir == -1:
 			attackCol.position = Vector2(-40, 0)  # Attack to the left
 			attackCol.rotation_degrees = 90
+			attackParticles.position = Vector2(-90,0)
 			attackSprite.flip_h = true
 			attackSprite.position = Vector2(-40, 0)  # Attack to the left
 			attackSprite.rotation_degrees = 0
@@ -394,6 +397,7 @@ func _on_attack_timeout() -> void:
 	attacking = false
 	attackCol.set_deferred("disabled", true)  # Disable hitbox
 	attackCol.position = Vector2(0, 0)  # Reset hitbox position
+	attackParticles.emitting = false
 	attackSprite.hide()
 	# Return to the correct state
 	if !is_on_floor():
@@ -415,6 +419,7 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 	if area.name == "damageArea" and !attackCol.disabled and colisionCheck == false:
 		canDoubleJump = true
 		colisionCheck = true
+		attackParticles.emitting = true
 		# Only bounce if the player is attacking downward (so pogo effect is relevant)
 		if Input.is_action_pressed("ui_down"):  # Downward attack (pogo)
 			velocity.y = -ATTACK_KNOCKBACK * 1.4
