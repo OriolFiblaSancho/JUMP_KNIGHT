@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2dswls8uusmu"]
+
+[ext_resource type="Script" path="res://scripts/Z2/arrow.gd" id="1_pbcu5"]
+[ext_resource type="Texture2D" uid="uid://c7nirv6lhwq3u" path="res://assets/arrow.png" id="2_p1q1y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5rf4w"]
+size = Vector2(11.4856, 11.4197)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fpfg"]
+radius = 5.0
+
+[node name="arrow" type="RigidBody2D"]
+script = ExtResource("1_pbcu5")
+
+[node name="arrowSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -21)
+texture = ExtResource("2_p1q1y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6.33299e-08, -7)
+rotation = 0.785398
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_5rf4w")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+autostart = true
+
+[node name="damageArea" type="Area2D" parent="."]
+position = Vector2(0, -7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="damageArea"]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_7fpfg")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
