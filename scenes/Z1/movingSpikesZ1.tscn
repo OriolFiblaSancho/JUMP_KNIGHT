@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvvy80mbolb44"]
+[gd_scene load_steps=5 format=3 uid="uid://dvvy80mbolb44"]
 
 [ext_resource type="Script" path="res://scripts/movingSpikes.gd" id="1_2rxsh"]
 [ext_resource type="Texture2D" uid="uid://d4f4btsaqufb2" path="res://assets/dungeon/movingSpikeZ1.png" id="2_d18hj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_he380"]
 radius = 64.0312
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_avm6f"]
+radius = 12.0
+height = 28.0
 
 [node name="movingSpikes" type="CharacterBody2D"]
 script = ExtResource("1_2rxsh")
@@ -17,3 +21,82 @@ texture = ExtResource("2_d18hj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="damageArea"]
 shape = SubResource("CircleShape2D_he380")
+
+[node name="left" type="Area2D" parent="."]
+
+[node name="Particles" type="CPUParticles2D" parent="left"]
+position = Vector2(-62, -1)
+emitting = false
+amount = 50
+lifetime = 0.1
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 117.8
+initial_velocity_max = 180.3
+scale_amount_max = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="left"]
+position = Vector2(-52, 1)
+shape = SubResource("CapsuleShape2D_avm6f")
+
+[node name="right" type="Area2D" parent="."]
+
+[node name="Particles" type="CPUParticles2D" parent="right"]
+position = Vector2(62.3722, 0.767776)
+emitting = false
+amount = 50
+lifetime = 0.1
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 117.8
+initial_velocity_max = 180.3
+scale_amount_max = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right"]
+position = Vector2(51, 2)
+shape = SubResource("CapsuleShape2D_avm6f")
+
+[node name="up" type="Area2D" parent="."]
+
+[node name="Particles" type="CPUParticles2D" parent="up"]
+position = Vector2(-0.913834, -64.2861)
+emitting = false
+amount = 50
+lifetime = 0.1
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 117.8
+initial_velocity_max = 180.3
+scale_amount_max = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="up"]
+position = Vector2(-1, -53)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_avm6f")
+
+[node name="down" type="Area2D" parent="."]
+
+[node name="Particles" type="CPUParticles2D" parent="down"]
+position = Vector2(-1.62094, 61.9325)
+emitting = false
+amount = 50
+lifetime = 0.1
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 117.8
+initial_velocity_max = 180.3
+scale_amount_max = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="down"]
+position = Vector2(0, 52)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_avm6f")
+
+[connection signal="area_entered" from="left" to="." method="_on_left_area_entered"]
+[connection signal="area_entered" from="right" to="." method="_on_right_area_entered"]
+[connection signal="area_entered" from="up" to="." method="_on_up_area_entered"]
+[connection signal="area_entered" from="down" to="." method="_on_down_area_entered"]

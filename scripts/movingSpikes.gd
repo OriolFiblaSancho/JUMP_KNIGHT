@@ -3,7 +3,10 @@ extends CharacterBody2D
 @export var pos: Vector2
 @export var vel: float
 
-
+@onready var particlesLeft = $left/Particles
+@onready var particlesRight = $right/Particles
+@onready var particlesUp = $up/Particles
+@onready var particlesDown = $down/Particles
 func _ready() -> void:
 	#Controla la animacion de girar
 	var rotate_tween = get_tree().create_tween()
@@ -22,3 +25,23 @@ func _ready() -> void:
 	# Movimiento de ida y vuelta sin acumulación de posición
 	move_tween.tween_property(self, "position", target_position, vel)
 	move_tween.tween_property(self, "position", start_position, vel)
+
+
+
+func _on_left_area_entered(area: Area2D) -> void:
+	if area.name == "attackArea":
+			particlesLeft.emitting = true
+		
+func _on_right_area_entered(area: Area2D) -> void:
+	if area.name == "attackArea":
+		particlesRight.emitting = true
+
+
+func _on_up_area_entered(area: Area2D) -> void:
+	if area.name == "attackArea":
+		particlesUp.emitting = true
+
+
+func _on_down_area_entered(area: Area2D) -> void:
+	if area.name == "attackArea":
+		particlesDown.emitting = true

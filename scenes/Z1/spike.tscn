@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cc3vywoxoh5k5"]
+[gd_scene load_steps=3 format=3 uid="uid://cc3vywoxoh5k5"]
 
 [ext_resource type="Texture2D" uid="uid://dxmg6m88st874" path="res://assets/dungeon/spikesZ1.png" id="1_eb16u"]
+[ext_resource type="Script" path="res://scripts/Z1/spike.gd" id="2_g3uf5"]
 
 [node name="spike" type="Sprite2D" groups=["spike"]]
 position = Vector2(1, 0)
 texture = ExtResource("1_eb16u")
 hframes = 7
+script = ExtResource("2_g3uf5")
 
 [node name="damageArea" type="Area2D" parent="."]
 visible = false
@@ -13,3 +15,17 @@ visible = false
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="damageArea"]
 position = Vector2(0, 1)
 polygon = PackedVector2Array(-27, 7, -28, 31, 25, 31, 25, 16, 18, 14, 15, -6, 10, 7, 7, 11, -2, -1, -10, 14, -18, -1)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(-2, -2)
+emitting = false
+amount = 50
+lifetime = 0.1
+one_shot = true
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 117.8
+initial_velocity_max = 180.3
+scale_amount_max = 2.0
+
+[connection signal="area_entered" from="damageArea" to="." method="_on_damage_area_area_entered"]
