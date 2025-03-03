@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b4qu6sjnsun20"]
 
-[ext_resource type="Script" path="res://scripts/demoDoubleJumpBox.gd" id="1_iivxb"]
+[ext_resource type="Script" uid="uid://bohif3q2sdpa0" path="res://scripts/demoDoubleJumpBox.gd" id="1_iivxb"]
 [ext_resource type="Texture2D" uid="uid://g8n43fvmh30g" path="res://assets/demoDoubleJumpBox.png" id="1_q2ybu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6ghr"]

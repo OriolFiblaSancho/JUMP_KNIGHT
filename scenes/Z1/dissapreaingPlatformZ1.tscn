@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://darf3dmjoxyvv"]
 
-[ext_resource type="Script" path="res://scripts/disappearingPlatform.gd" id="1_n0k8w"]
+[ext_resource type="Script" uid="uid://chrkmt0ytkf68" path="res://scripts/disappearingPlatform.gd" id="1_n0k8w"]
 [ext_resource type="Texture2D" uid="uid://y3dfh3mru7ok" path="res://assets/dungeon/dissapearingPlatormZ1.png" id="2_thhsg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kf7mg"]
@@ -62,8 +62,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cr1y4"]
 _data = {
-"appear": SubResource("Animation_ct5ie"),
-"dissapear": SubResource("Animation_wyi5s")
+&"appear": SubResource("Animation_ct5ie"),
+&"dissapear": SubResource("Animation_wyi5s")
 }
 
 [node name="DisappearingPlatformZ1" type="StaticBody2D"]

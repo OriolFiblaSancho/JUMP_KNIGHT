@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cc3vywoxoh5k5"]
 
 [ext_resource type="Texture2D" uid="uid://dxmg6m88st874" path="res://assets/dungeon/spikesZ1.png" id="1_eb16u"]
-[ext_resource type="Script" path="res://scripts/Z1/spike.gd" id="2_g3uf5"]
+[ext_resource type="Script" uid="uid://6bhsa5awwh0c" path="res://scripts/Z1/spike.gd" id="2_g3uf5"]
 
 [node name="spike" type="Sprite2D" groups=["spike"]]
 position = Vector2(1, 0)

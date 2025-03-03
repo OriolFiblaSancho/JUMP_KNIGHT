@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dngcllo3ic1tf"]
 
-[ext_resource type="Script" path="res://broken_tile.gd" id="1_6jvju"]
+[ext_resource type="Script" uid="uid://d0whx870cohtc" path="res://broken_tile.gd" id="1_6jvju"]
 [ext_resource type="Texture2D" uid="uid://cy2kkpcw1xmw3" path="res://assets/dungeon/brokenTileZ1.png" id="2_hytpx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3gof"]

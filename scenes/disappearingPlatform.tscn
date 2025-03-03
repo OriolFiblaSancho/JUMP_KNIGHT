@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bsh3gkcji1rw5"]
 
-[ext_resource type="Script" path="res://scripts/disappearingPlatform.gd" id="1_l7adt"]
+[ext_resource type="Script" uid="uid://chrkmt0ytkf68" path="res://scripts/disappearingPlatform.gd" id="1_l7adt"]
 [ext_resource type="Texture2D" uid="uid://b6fr3pifnmx1g" path="res://assets/demoPlatform.png" id="2_uxk5l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kf7mg"]
@@ -62,8 +62,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cr1y4"]
 _data = {
-"appear": SubResource("Animation_ct5ie"),
-"dissapear": SubResource("Animation_wyi5s")
+&"appear": SubResource("Animation_ct5ie"),
+&"dissapear": SubResource("Animation_wyi5s")
 }
 
 [node name="DisappearingPlatform" type="StaticBody2D"]

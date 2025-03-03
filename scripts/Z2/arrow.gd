@@ -1,9 +1,9 @@
 extends RigidBody2D
 
-var speed: float = 500
+var speed: float = 300
 var gravity: float = 600
 
-@onready var damageAreaCol = $damageArea/CollisionShape2D
+@onready var damageAreaCol = $damageArea/CollisionPolygon2D
 @onready var arrowCol = $CollisionShape2D
 
 func _ready():
@@ -16,21 +16,17 @@ func _ready():
 
 func _physics_process(delta):
 	linear_velocity.y += gravity * delta
-	print(linear_velocity.y)
-	if linear_velocity.y <= 15:
-		freeze = true
-		damageAreaCol.disabled = true
-		arrowCol.disabled = true
-		#Makes arrow dissapear
-		var tween = get_tree().create_tween()
-		tween.tween_property(self, "modulate:a", 0.0, 0.5)
-		await tween.finished
-		queue_free()
-		
+
 func set_target(target_position: Vector2):
 	# Direction to the player
 	var direction = (target_position - global_position).normalized()
 	linear_velocity = direction * speed
-
-
 	
+func _on_body_entered(body: Node) -> void:
+	if body.is_in_group("floor"):
+		damageAreaCol.disabled = true
+		arrowCol.disabled = true
+		var tween = get_tree().create_tween()
+		tween.tween_property(self, "modulate:a", 0.0, 0.5)
+		await tween.finished
+		queue_free()

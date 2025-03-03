@@ -201,6 +201,7 @@ func _physics_process(delta: float):
 
 		
 	#DEBUGGING-----------------------------------------
+
 	print("----",debug_counter,"----")
 	print("DIR - ",direction)
 	print("VEL - ",velocity)

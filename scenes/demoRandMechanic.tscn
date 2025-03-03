@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bi28a7lcaty7m"]
 
-[ext_resource type="Texture2D" uid="uid://dxp0xdx8cxh05" path="res://demoCube2.png" id="1_vqn5s"]
-[ext_resource type="Script" path="res://scripts/demo_rand_mechanic.gd" id="2_hiewc"]
+[ext_resource type="Texture2D" uid="uid://dxp0xdx8cxh05" path="res://assets/demoCube2.png" id="1_vqn5s"]
+[ext_resource type="Script" uid="uid://bfb1tisd0orum" path="res://scripts/demo_rand_mechanic.gd" id="2_hiewc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d081q"]
 size = Vector2(64, 64)

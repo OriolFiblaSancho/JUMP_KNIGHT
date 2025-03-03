@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ci4qec4ryh2tj"]
 
-[ext_resource type="Script" path="res://scripts/Z1/doorZ1.gd" id="1_jon6l"]
+[ext_resource type="Script" uid="uid://d1iiv8gee1i45" path="res://scripts/Z1/doorZ1.gd" id="1_jon6l"]
 [ext_resource type="Texture2D" uid="uid://bracv67xi45v4" path="res://assets/dungeon/Dungeon Tile Set.png" id="1_o2kbp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pyqre"]

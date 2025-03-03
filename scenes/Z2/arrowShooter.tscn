@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bqmh2q042go6r"]
 
-[ext_resource type="Script" path="res://scripts/Z2/arrowShooter.gd" id="1_spx8c"]
+[ext_resource type="Script" uid="uid://dev2w5msxct53" path="res://scripts/Z2/arrowShooter.gd" id="1_spx8c"]
 [ext_resource type="PackedScene" uid="uid://c2dswls8uusmu" path="res://scenes/Z2/arrow.tscn" id="2_4jb6x"]
 
 [node name="arrowShooter" type="Node2D"]
