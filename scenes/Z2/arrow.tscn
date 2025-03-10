@@ -7,17 +7,19 @@
 size = Vector2(10.6925, 10.6596)
 
 [node name="arrow" type="RigidBody2D"]
+mass = 0.25
 continuous_cd = 1
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_pbcu5")
 
 [node name="arrowSprite" type="Sprite2D" parent="."]
-position = Vector2(0, -21)
+position = Vector2(-21, 0)
+rotation = -1.5708
 texture = ExtResource("2_p1q1y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2.98023e-07, -8)
+position = Vector2(-7, 0)
 rotation = 0.785398
 shape = SubResource("RectangleShape2D_5rf4w")
 
@@ -25,7 +27,8 @@ shape = SubResource("RectangleShape2D_5rf4w")
 position = Vector2(0, -7)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="damageArea"]
-position = Vector2(0, -1)
+position = Vector2(-7, 7)
+rotation = -1.5708
 polygon = PackedVector2Array(-9, -2, 9, -2, 0, 9)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

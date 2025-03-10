@@ -20,6 +20,7 @@ extends CharacterBody2D
 @onready var deathParticles = $deathParticles
 @onready var deathCountLabel = $ui/deathCounter/Label
 @onready var timerLabel = $ui/timer/Label
+@onready var walkTileSound = $sounds/walk
 
 @export var cameraLimitLeft: int = 0
 @export var cameraLimitRight: int = 0
@@ -90,29 +91,34 @@ func _physics_process(delta: float):
 	match currentState:
 		playerStates.IDLE:
 			playerAnim.play("idle")
+			walkingParticles.emitting = false
 		playerStates.RUN:
 			playerAnim.play("run")
+			walkingParticles.emitting = true
+			if $sounds/steps.time_left <= 0:
+				$sounds/walk.pitch_scale = randf_range(0.8,1)
+				$sounds/walk.play()
+				$sounds/steps.start(0.15)
 		playerStates.JUMP:
 			playerAnim.play("roll")
+			walkingParticles.emitting = false
 		playerStates.DASH:
 			playerAnim.play("roll")
+			walkingParticles.emitting = false
 		playerStates.ATTACK:
 			playerAnim.play("attack")
+			walkingParticles.emitting = false
 		playerStates.FALLING:
 			playerAnim.play("idle")
+			walkingParticles.emitting = false
 			
 	var direction := Input.get_axis("ui_left", "ui_right")
 	var was_on_floor = is_on_floor()
 	
 	
-	
 	if direction != 0:
 		last_dir = direction
-	
-	if is_on_floor() and abs(velocity.x) > 10 and currentState != playerStates.DASH:
-		walkingParticles.emitting = true
-	else:
-		walkingParticles.emitting = false
+		
 	
 	# GRAVITY HANDLING
 	if not is_on_floor() and !dashing:
@@ -146,6 +152,7 @@ func _physics_process(delta: float):
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() || !coyote_time.is_stopped():	#HANDLES JUMP and coyote time
 			velocity.y = JUMP_VELOCITY
+			$sounds/preJump.play()
 			jumping = 1
 			canDoubleJump = true
 		elif wall_colider():	#HANDLES WALL JUMP
@@ -197,6 +204,8 @@ func _physics_process(delta: float):
 	if was_on_floor && !is_on_floor():
 		coyote_time.start()
 		canDoubleJump = true
+	elif !was_on_floor && is_on_floor():
+		$sounds/postJump.play()
 	
 
 		

@@ -1,8 +1,11 @@
-[gd_scene load_steps=50 format=3 uid="uid://ca7r200x4ljon"]
+[gd_scene load_steps=53 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" uid="uid://dmjf2hys2bexr" path="res://scripts/player.gd" id="1_aiyym"]
+[ext_resource type="AudioStream" uid="uid://bbraljvrjqfh4" path="res://assets/sounds/player/walkGrass.wav" id="2_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://cqd53f3spruu4" path="res://assets/knight-sprite/Idle.png" id="3_4ely7"]
+[ext_resource type="AudioStream" uid="uid://b3qm76upxw84a" path="res://assets/sounds/player/preJumpGrass.wav" id="3_oprun"]
 [ext_resource type="Texture2D" uid="uid://br6rqy1qr7d03" path="res://assets/knight-sprite/Attack.png" id="3_s1i6c"]
+[ext_resource type="AudioStream" uid="uid://bwdg7xbfxegft" path="res://assets/sounds/player/postJumpGrass.wav" id="4_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://docx7d512tb2a" path="res://assets/knight-sprite/Roll.png" id="5_3m2h8"]
 [ext_resource type="Texture2D" uid="uid://c3h1c5u6djkjc" path="res://assets/knight-sprite/Run.png" id="6_1awkv"]
 [ext_resource type="Texture2D" uid="uid://bu1qn4va3m01" path="res://assets/attackSprite.png" id="6_4t11m"]
@@ -358,7 +361,7 @@ font = ExtResource("13_bkpph")
 font_size = 24
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5weh3"]
-radius = 17.0
+radius = 19.0
 height = 59.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_olwe3"]
@@ -374,6 +377,24 @@ size = Vector2(20.5, 7.03125)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_aiyym")
+
+[node name="sounds" type="Node" parent="."]
+
+[node name="walk" type="AudioStreamPlayer" parent="sounds"]
+stream = ExtResource("2_a8ls1")
+volume_db = -40.0
+
+[node name="steps" type="Timer" parent="sounds"]
+wait_time = 0.15
+one_shot = true
+
+[node name="preJump" type="AudioStreamPlayer" parent="sounds"]
+stream = ExtResource("3_oprun")
+volume_db = -40.0
+
+[node name="postJump" type="AudioStreamPlayer" parent="sounds"]
+stream = ExtResource("4_a8ls1")
+volume_db = -40.0
 
 [node name="walkingParticles" type="CPUParticles2D" parent="."]
 position = Vector2(-2, 29)
@@ -405,7 +426,7 @@ scale_amount_curve = SubResource("Curve_e8kfs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3yw3j")
-animation = &"attack"
+animation = &"idle"
 frame = 1
 
 [node name="attackSprite" type="Sprite2D" parent="AnimatedSprite2D"]
