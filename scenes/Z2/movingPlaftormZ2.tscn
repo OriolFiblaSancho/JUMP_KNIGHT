@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://ch7yu7q7kidmu"]
+[gd_scene load_steps=4 format=3 uid="uid://ch7yu7q7kidmu"]
 
+[ext_resource type="Script" uid="uid://cu2gi1158pkuo" path="res://scripts/Z2/movingPlaftormZ2.gd" id="1_8luub"]
 [ext_resource type="Texture2D" uid="uid://66evwk715fq7" path="res://assets/movingPlatformZ2.png" id="1_xk5yq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aafu5"]
 size = Vector2(248.25, 79.25)
 
-[node name="AnimatableBody2D" type="AnimatableBody2D"]
+[node name="AnimatableBody2D" type="AnimatableBody2D" groups=["floor"]]
+script = ExtResource("1_8luub")
+max_distance = 850.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1, -78)

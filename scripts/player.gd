@@ -246,45 +246,62 @@ func wall_sliding():
 
 #DAMAGE FUNC
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if hurtBoxCol.disabled == false and healtCheck == false:
-		if area.name == "damageArea":
-			deathCount += 1
-			deathCountLabel.text = str(deathCount)
-			healtCheck = true
-			currentHealth -= 1
-			if currentHealth <= 0:
-				#knockBack()
-				frameFreeze()
-				#Sin esto inmortalHit superpone al frameFreeze
-				await get_tree().create_timer(0.2, true, false, true).timeout
-				inmortalHit()
-				healtCheck = false
-				position = checkpoint
-			
-		elif area.name == "restartArea":
-			deathCount += 1
-			deathCountLabel.text = str(deathCount)
-			healtCheck = true
-			currentHealth -= 1
-			if currentHealth <= 0:
-				canMove = false
-				velocity.x = 0
-				currentHealth = MAXHEALTH
-				deathParticles.emitting = true
-				await get_tree().create_timer(0.8, true, false, true).timeout
-				deathParticles.emitting = false
-				position = checkpoint
-				canMove = true
-			#knockBack()
-			frameFreeze()
-			#Sin esto inmortalHit superpone al frameFreeze
-			
-			await get_tree().create_timer(0.2, true, false, true).timeout
-			
-			inmortalHit()
-			healtCheck = false
+	# Early return if we can't be hurt
+	if hurtBoxCol.disabled or healtCheck:
+		return
 		
-		
+	# Flag to track if we should process damage
+	var should_process_damage = false
+	var is_restart_area = false
+	
+	# Check which type of damage area we entered
+	if area.name == "damageArea":
+		should_process_damage = true
+	elif area.name == "restartArea":
+		should_process_damage = true
+		is_restart_area = true
+	else:
+		# Not a damage area, exit early
+		return
+	
+	# Common damage processing for both area types
+	$leverRestartTime.start()
+	deathCount += 1
+	deathCountLabel.text = str(deathCount)
+	healtCheck = true
+	currentHealth -= 1
+	
+	# Handle death/low health
+	if currentHealth <= 0:
+		if is_restart_area:
+			# Restart area death handling
+			canMove = false
+			velocity.x = 0
+			currentHealth = MAXHEALTH
+			deathParticles.emitting = true
+			await get_tree().create_timer(0.8, true, false, true).timeout
+			deathParticles.emitting = false
+			position = checkpoint
+			canMove = true
+		else:
+			# Regular damage area death handling
+			# knockBack() is commented out in original
+			pass
+			
+	# Common effects for both area types
+	frameFreeze()
+	
+	# Wait before applying immortality effect
+	await get_tree().create_timer(0.2, true, false, true).timeout
+	
+	# Apply immortality and reset health check
+	inmortalHit()
+	healtCheck = false
+	
+	# Reset position for damage area
+	if currentHealth <= 0 and !is_restart_area:
+		position = checkpoint
+
 #knockBack FUNC	
 func knockBack():
 	var knockBackVel = Vector2(1200*(last_dir*-1) ,-600)
@@ -413,7 +430,7 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 	if direction != 0:
 		last_dir = direction
 	
-	if area.name == "damageArea" and !attackCol.disabled and colisionCheck == false:
+	if area.name == "damageArea" or area.name == "leverZ2" and !attackCol.disabled and colisionCheck == false:
 		canDoubleJump = true
 		colisionCheck = true
 		# Only bounce if the player is attacking downward (so pogo effect is relevant)
@@ -445,3 +462,8 @@ func _on_interact_area_area_entered(area: Area2D) -> void:
 
 func updateTimer():
 	timerLabel.text = Global.timeToString()
+
+func _on_lever_restart_time_timeout() -> void:
+	Global.isLeverOn = 0
+	Global.isLeverActivable = 1
+	Global.restartPlatform = 1

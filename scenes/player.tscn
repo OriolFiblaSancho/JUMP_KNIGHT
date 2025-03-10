@@ -382,7 +382,7 @@ script = ExtResource("1_aiyym")
 
 [node name="walk" type="AudioStreamPlayer" parent="sounds"]
 stream = ExtResource("2_a8ls1")
-volume_db = -40.0
+volume_db = -46.783
 
 [node name="steps" type="Timer" parent="sounds"]
 wait_time = 0.15
@@ -459,6 +459,9 @@ wait_time = 0.4
 
 [node name="attack" type="Timer" parent="."]
 wait_time = 0.3
+
+[node name="leverRestartTime" type="Timer" parent="."]
+one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -100)
@@ -588,6 +591,7 @@ shape = SubResource("RectangleShape2D_jb1n3")
 [connection signal="timeout" from="dashing" to="." method="_on_dashing_timeout"]
 [connection signal="timeout" from="dashAgain" to="." method="_on_dash_again_timeout"]
 [connection signal="timeout" from="attack" to="." method="_on_attack_timeout"]
+[connection signal="timeout" from="leverRestartTime" to="." method="_on_lever_restart_time_timeout"]
 [connection signal="area_entered" from="hurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_entered" from="attackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="area_entered" from="interactArea" to="." method="_on_interact_area_area_entered"]
