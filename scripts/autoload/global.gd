@@ -13,8 +13,6 @@ var c = 1
 func _process(delta: float) -> void:
 	time += delta
 	c += 1
-	if isLeverActivable:
-		print("SEXOOO", c)
 func timeToString() -> String:
 	var msec = fmod(time,1) * 1000
 	var sec = fmod(time,60)

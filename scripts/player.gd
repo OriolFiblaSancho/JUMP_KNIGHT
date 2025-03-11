@@ -257,7 +257,9 @@ func _on_hurt_box_area_entered(area: Area2D) -> void:
 	# Check which type of damage area we entered
 	if area.name == "damageArea":
 		should_process_damage = true
+		$sounds/damage.play()
 	elif area.name == "restartArea":
+		$sounds/deadByFall.play()
 		should_process_damage = true
 		is_restart_area = true
 	else:
@@ -366,6 +368,7 @@ func attack():
 	var direction := Input.get_axis("ui_left", "ui_right")
 	attacking = true
 	velocity.x = 0  # Stop horizontal movement briefly
+	$sounds/attackSwing.play()
 	if direction != 0:
 		last_dir = direction
 	

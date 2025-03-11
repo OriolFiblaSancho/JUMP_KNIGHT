@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://ca7r200x4ljon"]
+[gd_scene load_steps=55 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" uid="uid://dmjf2hys2bexr" path="res://scripts/player.gd" id="1_aiyym"]
 [ext_resource type="AudioStream" uid="uid://bbraljvrjqfh4" path="res://assets/sounds/player/walkGrass.wav" id="2_a8ls1"]
@@ -7,8 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://br6rqy1qr7d03" path="res://assets/knight-sprite/Attack.png" id="3_s1i6c"]
 [ext_resource type="AudioStream" uid="uid://bwdg7xbfxegft" path="res://assets/sounds/player/postJumpGrass.wav" id="4_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://docx7d512tb2a" path="res://assets/knight-sprite/Roll.png" id="5_3m2h8"]
+[ext_resource type="AudioStream" uid="uid://b4fe2yq84edei" path="res://assets/sounds/player/swordSwing1.wav" id="5_qfm1y"]
 [ext_resource type="Texture2D" uid="uid://c3h1c5u6djkjc" path="res://assets/knight-sprite/Run.png" id="6_1awkv"]
 [ext_resource type="Texture2D" uid="uid://bu1qn4va3m01" path="res://assets/attackSprite.png" id="6_4t11m"]
+[ext_resource type="AudioStream" uid="uid://dalikaxih5irl" path="res://assets/sounds/player/deadFall.wav" id="6_fulsm"]
 [ext_resource type="Script" uid="uid://b6fufayvij680" path="res://boxContainer.gd" id="7_0djum"]
 [ext_resource type="Texture2D" uid="uid://88egfyhx36st" path="res://assets/demoDashBox.png" id="8_gb30l"]
 [ext_resource type="Texture2D" uid="uid://g8n43fvmh30g" path="res://assets/demoDoubleJumpBox.png" id="9_hyk86"]
@@ -394,6 +396,18 @@ volume_db = -40.0
 
 [node name="postJump" type="AudioStreamPlayer" parent="sounds"]
 stream = ExtResource("4_a8ls1")
+volume_db = -40.0
+
+[node name="attackSwing" type="AudioStreamPlayer" parent="sounds"]
+stream = ExtResource("5_qfm1y")
+volume_db = -21.767
+
+[node name="deadByFall" type="AudioStreamPlayer" parent="sounds"]
+stream = ExtResource("6_fulsm")
+volume_db = -30.522
+
+[node name="damage" type="AudioStreamPlayer" parent="sounds"]
+stream = ExtResource("6_fulsm")
 volume_db = -40.0
 
 [node name="walkingParticles" type="CPUParticles2D" parent="."]

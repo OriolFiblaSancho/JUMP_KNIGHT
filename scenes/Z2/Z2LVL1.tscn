@@ -45,13 +45,13 @@ position = Vector2(23124, -289)
 
 [node name="player" parent="." instance=ExtResource("2_5o4li")]
 z_index = 1
-position = Vector2(21934.5, -909.428)
+position = Vector2(7693.5, -149.558)
 cameraLimitRight = 100000000
 cameraLimitTop = -1000000
 cameraLimitBottom = 500
 
 [node name="arrowShooter" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_ettd7")]
-position = Vector2(20724, -2166)
+position = Vector2(7919, -248)
 player = NodePath("../player")
 
 [node name="demoDashBox" parent="." instance=ExtResource("5_qhvqy")]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ci4qec4ryh2tj"]
+[gd_scene load_steps=6 format=3 uid="uid://ci4qec4ryh2tj"]
 
 [ext_resource type="Script" uid="uid://d1iiv8gee1i45" path="res://scripts/Z1/doorZ1.gd" id="1_jon6l"]
 [ext_resource type="Texture2D" uid="uid://bracv67xi45v4" path="res://assets/dungeon/Dungeon Tile Set.png" id="1_o2kbp"]
+[ext_resource type="AudioStream" uid="uid://d4b3fcljyo22y" path="res://assets/sounds/door.wav" id="3_0ls2k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pyqre"]
 size = Vector2(28, 118)
@@ -31,5 +32,9 @@ frame = 87
 position = Vector2(-17, 3)
 shape = SubResource("RectangleShape2D_m6qan")
 disabled = true
+
+[node name="openound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0ls2k")
+volume_db = -30.0
 
 [connection signal="area_entered" from="openDoorArea" to="." method="_on_open_door_area_area_entered"]

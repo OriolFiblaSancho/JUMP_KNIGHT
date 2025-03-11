@@ -198,7 +198,7 @@ position = Vector2(1118, 64)
 
 [node name="player" parent="." instance=ExtResource("2_qj6l0")]
 z_index = 1
-position = Vector2(1443, -127)
+position = Vector2(583, 19)
 cameraLimitRight = 5730
 cameraLimitTop = -4250
 cameraLimitBottom = 509
