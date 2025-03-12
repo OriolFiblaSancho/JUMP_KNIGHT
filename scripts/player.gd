@@ -436,6 +436,7 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 	if area.name == "damageArea" or area.name == "leverZ2" and !attackCol.disabled and colisionCheck == false:
 		canDoubleJump = true
 		colisionCheck = true
+		$sounds/swordParry.play()
 		# Only bounce if the player is attacking downward (so pogo effect is relevant)
 		if Input.is_action_pressed("ui_down"):  # Downward attack (pogo)
 			velocity.y = -ATTACK_KNOCKBACK * 1.4

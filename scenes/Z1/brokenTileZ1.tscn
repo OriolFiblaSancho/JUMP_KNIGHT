@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dngcllo3ic1tf"]
+[gd_scene load_steps=10 format=3 uid="uid://dngcllo3ic1tf"]
 
 [ext_resource type="Script" uid="uid://d0whx870cohtc" path="res://broken_tile.gd" id="1_6jvju"]
 [ext_resource type="Texture2D" uid="uid://cy2kkpcw1xmw3" path="res://assets/dungeon/brokenTileZ1.png" id="2_hytpx"]
+[ext_resource type="AudioStream" uid="uid://b55ob7rktgwqw" path="res://assets/sounds/player/rockWallBreak.wav" id="3_0o0un"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3gof"]
 atlas = ExtResource("2_hytpx")
@@ -54,5 +55,9 @@ shape = SubResource("RectangleShape2D_tmtxp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/Area2D"]
 shape = SubResource("RectangleShape2D_6qige")
+
+[node name="breakSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0o0un")
+volume_db = -30.0
 
 [connection signal="area_entered" from="StaticBody2D/Area2D" to="." method="_on_area_2d_area_entered"]

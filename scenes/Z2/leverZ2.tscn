@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqo3f8ppfxf1u"]
+[gd_scene load_steps=5 format=3 uid="uid://dqo3f8ppfxf1u"]
 
 [ext_resource type="Script" uid="uid://b8uxipfh072ro" path="res://scripts/Z2/leverZ2.gd" id="1_0vo14"]
 [ext_resource type="Texture2D" uid="uid://cc1vh5yr50syu" path="res://assets/leverZ2.png" id="2_twi5s"]
+[ext_resource type="AudioStream" uid="uid://c16qvadkcc57l" path="res://assets/sounds/z2/lever.wav" id="3_twi5s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5jmqo"]
 size = Vector2(55, 36.5)
@@ -16,5 +17,9 @@ hframes = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.5, -0.75)
 shape = SubResource("RectangleShape2D_5jmqo")
+
+[node name="leverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_twi5s")
+volume_db = -20.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

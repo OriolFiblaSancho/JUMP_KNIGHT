@@ -20,6 +20,7 @@ func _process(delta: float) -> void:
 	if Global.isLeverOn:
 		if not has_started_moving:
 			has_started_moving = true
+			$elevatorSound.play()
 			
 		if smooth_movement:
 			# Movimiento suave hacia la posición objetivo
@@ -34,22 +35,27 @@ func _process(delta: float) -> void:
 	else:
 		# Si quieres que el nodo vuelva a su posición original cuando la palanca está desactivada
 		# descomenta estas líneas:
+		if position.y == initial_position.y + max_distance || (position.y < target_position.y && !$elevatorSound.playing):
+			$elevatorSound.play()  # Inicia el sonido cuando comienza a moverse hacia arriba
 		if has_started_moving:
 			Global.isLeverActivable = 0
 			if smooth_movement:
 				position = position.move_toward(initial_position, speed * delta)
+				
 			else:
 				position.y -= speed * delta
 		if position.y <= initial_position.y:
 			position.y = initial_position.y
 			Global.isLeverActivable = 1
 			has_started_moving = false
+			$elevatorSound.stop()
 			
 	#Llega a la posiicon maxima 
 	if position.y == initial_position.y + max_distance:
 		Global.isLeverActivable = 1
-	
+		$elevatorSound.stop()
+		
 	if Global.restartPlatform == 1:
 		position = initial_position
 		Global.restartPlatform = 0
-	
+		$elevatorSound.stop()

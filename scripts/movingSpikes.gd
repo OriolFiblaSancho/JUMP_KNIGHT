@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var particlesUp = $up/Particles
 @onready var particlesDown = $down/Particles
 func _ready() -> void:
+
 	#Controla la animacion de girar
 	var rotate_tween = get_tree().create_tween()
 	rotate_tween.set_loops()
@@ -26,7 +27,9 @@ func _ready() -> void:
 	move_tween.tween_property(self, "position", target_position, vel)
 	move_tween.tween_property(self, "position", start_position, vel)
 
-
+func _process(delta: float) -> void:
+	if !$spinningBlade.is_playing():
+		$spinningBlade.play()
 
 func _on_left_area_entered(area: Area2D) -> void:
 	if area.name == "attackArea":

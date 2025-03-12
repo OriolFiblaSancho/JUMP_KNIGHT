@@ -8,6 +8,7 @@ func _ready() -> void:
 	
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.name == "attackArea":
+		$breakSound.play()
 		life -= 1
 		sprite.frame += 1
 		if life < 0:
