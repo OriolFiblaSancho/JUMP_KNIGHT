@@ -3,6 +3,8 @@ extends Node2D
 var is_hoverSoundActivate = false
 var last_hovered_button = null
 
+var is_muted = false
+
 func _ready() -> void:
 	$mainMenuMusic.play()
 	
@@ -30,8 +32,13 @@ func _on_play_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Z1/Z1LVL1.tscn")
 	
 func _on_options_pressed() -> void:
-	pass # Replace with function body.
+	is_muted = !is_muted
 	
+	if is_muted:
+		AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), true)
+	else:
+		AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), false)
+		
 func _on_exit_pressed() -> void:
 	get_tree().quit()
 	

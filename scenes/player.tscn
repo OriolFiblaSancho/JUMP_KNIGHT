@@ -1,6 +1,7 @@
-[gd_scene load_steps=55 format=3 uid="uid://ca7r200x4ljon"]
+[gd_scene load_steps=56 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" uid="uid://dmjf2hys2bexr" path="res://scripts/player.gd" id="1_aiyym"]
+[ext_resource type="PackedScene" uid="uid://dn3bgjcip2u1s" path="res://scenes/menu/options.tscn" id="2_4r5pv"]
 [ext_resource type="AudioStream" uid="uid://bbraljvrjqfh4" path="res://assets/sounds/player/walkGrass.wav" id="2_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://cqd53f3spruu4" path="res://assets/knight-sprite/Idle.png" id="3_4ely7"]
 [ext_resource type="AudioStream" uid="uid://b3qm76upxw84a" path="res://assets/sounds/player/preJumpGrass.wav" id="3_oprun"]
@@ -379,6 +380,13 @@ size = Vector2(20.5, 7.03125)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_aiyym")
+
+[node name="pause" parent="." instance=ExtResource("2_4r5pv")]
+z_index = 4096
+offset_left = -1176.0
+offset_top = -688.0
+offset_right = -1176.0
+offset_bottom = -688.0
 
 [node name="sounds" type="Node" parent="."]
 

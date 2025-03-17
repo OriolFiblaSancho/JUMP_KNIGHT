@@ -1,12 +1,13 @@
-[gd_scene load_steps=13 format=4 uid="uid://t3caxcjn1jnm"]
+[gd_scene load_steps=14 format=4 uid="uid://t3caxcjn1jnm"]
 
 [ext_resource type="Script" uid="uid://xets4w4lanby" path="res://scripts/menu/MainMenu.gd" id="1_nl8w3"]
 [ext_resource type="Texture2D" uid="uid://m1k1vqwlgwd6" path="res://assets/menu/playNormal.png" id="2_3rkf3"]
 [ext_resource type="TileSet" uid="uid://d3iwboanudjiu" path="res://tileSets/Z1.tres" id="2_qgo02"]
 [ext_resource type="Texture2D" uid="uid://d31ytq6umovm3" path="res://assets/menu/playhover.png" id="3_hj162"]
-[ext_resource type="Texture2D" uid="uid://3t4jrvyelrel" path="res://assets/menu/settingsNormal.png" id="3_kiqgm"]
 [ext_resource type="Texture2D" uid="uid://clw3aqmmbgos" path="res://assets/menu/quitNormal.png" id="4_hj162"]
-[ext_resource type="Texture2D" uid="uid://cjl4pnd8ujn8h" path="res://assets/menu/settingsHover.png" id="5_xn6kt"]
+[ext_resource type="Texture2D" uid="uid://c2dxpn23ioidd" path="res://assets/menu/soundOnNormal.png" id="6_d4hu8"]
+[ext_resource type="Texture2D" uid="uid://bxnixqfs867ga" path="res://assets/menu/soundOnHoverl.png" id="7_p1nwe"]
+[ext_resource type="Texture2D" uid="uid://b4mooyp7q6ajd" path="res://assets/menu/soundOffNormal.png" id="8_prbor"]
 [ext_resource type="Texture2D" uid="uid://bmnffqm1sia6j" path="res://assets/menu/exitHover.png" id="8_vovv2"]
 [ext_resource type="FontFile" uid="uid://dadcerr3es0j0" path="res://assets/fonts/OldeTome.ttf" id="9_vovv2"]
 [ext_resource type="AudioStream" uid="uid://ckllomsw3308" path="res://assets/sounds/577017__nezuai__ui-sound-12.wav" id="10_1k4da"]
@@ -64,8 +65,10 @@ offset_top = 424.0
 offset_right = 690.0
 offset_bottom = 440.0
 scale = Vector2(8, 8)
-texture_normal = ExtResource("3_kiqgm")
-texture_hover = ExtResource("5_xn6kt")
+toggle_mode = true
+texture_normal = ExtResource("6_d4hu8")
+texture_pressed = ExtResource("8_prbor")
+texture_hover = ExtResource("7_p1nwe")
 
 [node name="exit" type="TextureButton" parent="ButtonManager"]
 layout_mode = 0

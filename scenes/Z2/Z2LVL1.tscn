@@ -171,6 +171,7 @@ texture = ExtResource("15_bk5ce")
 flip_h = true
 
 [node name="KnightWallJump" type="Sprite2D" parent="keycap"]
+z_index = 1
 position = Vector2(25244, -1054)
 texture = ExtResource("16_vmuac")
 flip_h = true
