@@ -1,17 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://4f0nf33dadtk"]
+[gd_scene load_steps=6 format=3 uid="uid://4f0nf33dadtk"]
 
 [ext_resource type="Script" uid="uid://bohif3q2sdpa0" path="res://scripts/demoDoubleJumpBox.gd" id="1_52o0m"]
-[ext_resource type="Texture2D" uid="uid://cosnyxcmt0bj5" path="res://assets/demoWallJumpingBox.png" id="2_8w0kf"]
+[ext_resource type="Shader" uid="uid://bwvhnp6xuo7ay" path="res://WallJumpBox.gdshader" id="1_etwiy"]
+[ext_resource type="Texture2D" uid="uid://bmexg4xi1hk2d" path="res://assets/wallJumpBox.png" id="2_wlvxk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y8olv"]
+shader = ExtResource("1_etwiy")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6ghr"]
 size = Vector2(64, 64)
 
-[node name="demoWallJumpBox" type="Node2D"]
+[node name="WallJumpBox" type="Node2D"]
+material = SubResource("ShaderMaterial_y8olv")
 scale = Vector2(0.6, 0.6)
 script = ExtResource("1_52o0m")
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 100
+lifetime = 0.5
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 137.5
+initial_velocity_max = 250.0
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_8w0kf")
+texture = ExtResource("2_wlvxk")
 
 [node name="demoWallJumpBoxArea" type="Area2D" parent="."]
 

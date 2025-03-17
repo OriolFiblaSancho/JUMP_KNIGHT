@@ -30,6 +30,10 @@ player=""
 spike=""
 floor=""
 
+[gui]
+
+fonts/dynamic_fonts/use_oversampling=false
+
 [input]
 
 ui_left={

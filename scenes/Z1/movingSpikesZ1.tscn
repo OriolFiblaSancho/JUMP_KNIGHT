@@ -16,7 +16,7 @@ script = ExtResource("1_2rxsh")
 
 [node name="spinningBlade" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_ml5n0")
-volume_db = -30.0
+volume_db = -40.0
 pitch_scale = 0.4
 autoplay = true
 max_distance = 1000.0

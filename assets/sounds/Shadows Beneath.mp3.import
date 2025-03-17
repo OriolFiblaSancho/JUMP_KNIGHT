@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cswet0j64pxym"
+path="res://.godot/imported/Shadows Beneath.mp3-53c83b0d890139b5e931133fa0c909db.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Shadows Beneath.mp3"
+dest_files=["res://.godot/imported/Shadows Beneath.mp3-53c83b0d890139b5e931133fa0c909db.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

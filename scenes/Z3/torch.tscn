@@ -1,0 +1,82 @@
+[gd_scene load_steps=13 format=3 uid="uid://dmula5wluk3c0"]
+
+[ext_resource type="Script" uid="uid://cai8heftlkcjy" path="res://scripts/Z3/torch.gd" id="1_ijfiy"]
+[ext_resource type="Texture2D" uid="uid://o1qc6cfoh7l6" path="res://assets/Torch Animated.png" id="1_yofr1"]
+[ext_resource type="Texture2D" uid="uid://pre6fdu4kgg5" path="res://assets/lights/playerLight.png" id="2_ijfiy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrdq2"]
+atlas = ExtResource("1_yofr1")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0spif"]
+atlas = ExtResource("1_yofr1")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guryt"]
+atlas = ExtResource("1_yofr1")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmy36"]
+atlas = ExtResource("1_yofr1")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmhky"]
+atlas = ExtResource("1_yofr1")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guni4"]
+atlas = ExtResource("1_yofr1")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r030i"]
+atlas = ExtResource("1_yofr1")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j70kj"]
+atlas = ExtResource("1_yofr1")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2f1dx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrdq2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0spif")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_guryt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmy36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmhky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_guni4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r030i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j70kj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="torch" type="Node2D"]
+script = ExtResource("1_ijfiy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2f1dx")
+frame_progress = 0.688385
+speed_scale = 1.2
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("2_ijfiy")
+texture_scale = 0.7

@@ -14,7 +14,7 @@ extends CharacterBody2D
 @onready var ActiveBoxContainer = $mechanicsActive/BoxContainer
 @onready var DemoDashBoxSprite = $ui/BoxContainer/DemoDashBox
 @onready var DemoDoubleJumpBoxSprite = $ui/BoxContainer/DemoDoubleJumpBox
-@onready var DemoWallJumpingBoxSprite = $ui/BoxContainer/DemoWallJumpingBox
+@onready var DemoWallJumpingBoxSprite = $ui/BoxContainer/WallJumpBox
 @onready var attackSprite = $AnimatedSprite2D/attackSprite
 @onready var walkingParticles = $walkingParticles
 @onready var deathParticles = $deathParticles
@@ -433,7 +433,7 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 	if direction != 0:
 		last_dir = direction
 	
-	if area.name == "damageArea" or area.name == "leverZ2" and !attackCol.disabled and colisionCheck == false:
+	if area.name == "damageArea" and !attackCol.disabled and colisionCheck == false:
 		canDoubleJump = true
 		colisionCheck = true
 		$sounds/swordParry.play()

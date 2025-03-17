@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://ca7r200x4ljon"]
+[gd_scene load_steps=55 format=3 uid="uid://ca7r200x4ljon"]
 
 [ext_resource type="Script" uid="uid://dmjf2hys2bexr" path="res://scripts/player.gd" id="1_aiyym"]
 [ext_resource type="AudioStream" uid="uid://bbraljvrjqfh4" path="res://assets/sounds/player/walkGrass.wav" id="2_a8ls1"]
@@ -11,14 +11,13 @@
 [ext_resource type="Texture2D" uid="uid://c3h1c5u6djkjc" path="res://assets/knight-sprite/Run.png" id="6_1awkv"]
 [ext_resource type="Texture2D" uid="uid://bu1qn4va3m01" path="res://assets/attackSprite.png" id="6_4t11m"]
 [ext_resource type="AudioStream" uid="uid://dalikaxih5irl" path="res://assets/sounds/player/deadFall.wav" id="6_fulsm"]
-[ext_resource type="Script" uid="uid://b6fufayvij680" path="res://boxContainer.gd" id="7_0djum"]
 [ext_resource type="AudioStream" uid="uid://bgjr6eqaxe4ic" path="res://assets/sounds/player/swordParry.wav" id="7_4r5pv"]
-[ext_resource type="Texture2D" uid="uid://88egfyhx36st" path="res://assets/demoDashBox.png" id="8_gb30l"]
 [ext_resource type="Texture2D" uid="uid://g8n43fvmh30g" path="res://assets/demoDoubleJumpBox.png" id="9_hyk86"]
-[ext_resource type="Texture2D" uid="uid://cosnyxcmt0bj5" path="res://assets/demoWallJumpingBox.png" id="10_ay8gs"]
 [ext_resource type="Script" uid="uid://t7cj0tya4guk" path="res://scripts/showFPS.gd" id="11_6eohe"]
 [ext_resource type="Texture2D" uid="uid://djjumgicfws63" path="res://assets/deathCounter.png" id="12_plsk1"]
 [ext_resource type="FontFile" uid="uid://dqgt7v0o7b8qy" path="res://assets/fonts/Monocraft.ttf" id="13_bkpph"]
+[ext_resource type="Texture2D" uid="uid://fbgvh78ty44k" path="res://assets/DashBox.png" id="13_fulsm"]
+[ext_resource type="Texture2D" uid="uid://bmexg4xi1hk2d" path="res://assets/wallJumpBox.png" id="15_fulsm"]
 
 [sub_resource type="Curve" id="Curve_y0bfb"]
 _data = [Vector2(1e-05, 0.263736), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -506,22 +505,21 @@ offset_top = -68.0
 offset_right = 200.0
 offset_bottom = -26.0
 grow_vertical = 0
-script = ExtResource("7_0djum")
 
 [node name="DemoDashBox" type="Sprite2D" parent="ui/BoxContainer"]
 position = Vector2(28, 20)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_gb30l")
+texture = ExtResource("13_fulsm")
 
 [node name="DemoDoubleJumpBox" type="Sprite2D" parent="ui/BoxContainer"]
 position = Vector2(79, 20)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_hyk86")
 
-[node name="DemoWallJumpingBox" type="Sprite2D" parent="ui/BoxContainer"]
+[node name="WallJumpBox" type="Sprite2D" parent="ui/BoxContainer"]
 position = Vector2(132, 20)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("10_ay8gs")
+texture = ExtResource("15_fulsm")
 
 [node name="fpsCounter" type="Control" parent="ui"]
 layout_mode = 3

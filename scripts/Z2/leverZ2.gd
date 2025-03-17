@@ -11,11 +11,11 @@ func _physics_process(delta: float) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.name == "attackArea":
 		if Global.isLeverActivable:
+			$leverSound.play()
 			if !Global.isLeverOn:
 				Global.isLeverOn = 1
 				Global.isLeverActivable = 0
 				$Sprite2D.frame = 0
-				$leverSound.play()
 			else:
 				Global.isLeverOn = 0
 				Global.isLeverActivable = 0

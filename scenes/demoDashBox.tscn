@@ -1,17 +1,25 @@
 [gd_scene load_steps=4 format=3 uid="uid://d1p3y5iuj2qx4"]
 
 [ext_resource type="Script" uid="uid://bohif3q2sdpa0" path="res://scripts/demoDoubleJumpBox.gd" id="1_fvfia"]
-[ext_resource type="Texture2D" uid="uid://88egfyhx36st" path="res://assets/demoDashBox.png" id="2_5cfnq"]
+[ext_resource type="Texture2D" uid="uid://fbgvh78ty44k" path="res://assets/DashBox.png" id="2_n1ivg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6ghr"]
 size = Vector2(64, 64)
 
-[node name="demoDashBox" type="Node2D"]
+[node name="DashBox" type="Node2D"]
 scale = Vector2(0.6, 0.6)
 script = ExtResource("1_fvfia")
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 100
+lifetime = 0.5
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 137.5
+initial_velocity_max = 250.0
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_5cfnq")
+texture = ExtResource("2_n1ivg")
 
 [node name="demoDashBoxArea" type="Area2D" parent="."]
 

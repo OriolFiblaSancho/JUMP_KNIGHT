@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=4 uid="uid://bw3tbgvpgi31b"]
+[gd_scene load_steps=25 format=4 uid="uid://bw3tbgvpgi31b"]
 
 [ext_resource type="TileSet" uid="uid://d3iwboanudjiu" path="res://tileSets/Z1.tres" id="1_gygbs"]
+[ext_resource type="Script" uid="uid://co8q1p5mu6jpn" path="res://scripts/Z1/z_1lvl_1.gd" id="1_rqywl"]
 [ext_resource type="PackedScene" uid="uid://cc3vywoxoh5k5" path="res://scenes/Z1/spike.tscn" id="2_gvkg8"]
 [ext_resource type="PackedScene" uid="uid://ca7r200x4ljon" path="res://scenes/player.tscn" id="2_qj6l0"]
 [ext_resource type="PackedScene" uid="uid://dvvy80mbolb44" path="res://scenes/Z1/movingSpikesZ1.tscn" id="3_7j7i6"]
@@ -11,12 +12,62 @@
 [ext_resource type="PackedScene" uid="uid://bbyynfbtlgtf6" path="res://scenes/Z1/movingPlatformZ1.tscn" id="7_ndg2r"]
 [ext_resource type="PackedScene" uid="uid://03avgrfw5jkd" path="res://scenes/changeScenes.tscn" id="10_snhhj"]
 [ext_resource type="FontFile" uid="uid://dqgt7v0o7b8qy" path="res://assets/fonts/Monocraft.ttf" id="11_m1xkx"]
+[ext_resource type="Texture2D" uid="uid://vre5kjntwb3t" path="res://assets/keyboard/keyboard_33.png" id="12_imq60"]
+[ext_resource type="Texture2D" uid="uid://wu2etcpuc61r" path="res://assets/keyboard/keyboard_134.png" id="13_rqywl"]
+[ext_resource type="Texture2D" uid="uid://dtitdseikicrr" path="res://assets/keyboard/keyboard_71.png" id="14_cfrp4"]
+[ext_resource type="Texture2D" uid="uid://dglnk58ky5ys0" path="res://assets/keyboard/keyboard_172.png" id="15_ucsnk"]
+[ext_resource type="Texture2D" uid="uid://d2v874axcarxb" path="res://assets/player/knightPogo.png" id="16_uet0d"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1gps5"]
 font = ExtResource("11_m1xkx")
 font_size = 45
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1s61"]
+atlas = ExtResource("12_imq60")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h05ge"]
+atlas = ExtResource("13_rqywl")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xnkh3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1s61")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h05ge")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1t4oy"]
+atlas = ExtResource("14_cfrp4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmb87"]
+atlas = ExtResource("15_ucsnk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o523r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1t4oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pmb87")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Z1LVL1" type="Node2D"]
+script = ExtResource("1_rqywl")
 metadata/_edit_lock_ = true
 
 [node name="tailmaps" type="Node" parent="."]
@@ -198,7 +249,7 @@ position = Vector2(1118, 64)
 
 [node name="player" parent="." instance=ExtResource("2_qj6l0")]
 z_index = 1
-position = Vector2(4266.33, -121.253)
+position = Vector2(601, 27)
 cameraLimitRight = 5730
 cameraLimitTop = -4250
 cameraLimitBottom = 509
@@ -294,17 +345,38 @@ polygon = PackedVector2Array(-3, -4352, 1, 511, 5631, 510, 5630, -4349, 1207, -4
 position = Vector2(515, -4504)
 scale = Vector2(1.2, 1.2)
 nextLevel = "res://scenes/Z1/Z1LVL2.tscn"
-spawnPositionY = -4334
+spawnPositionY = -4372
+spawnPositionX = 560
 
 [node name="Label" type="Label" parent="."]
 z_index = 1
-offset_left = 1502.0
-offset_top = 71.0
-offset_right = 1922.0
-offset_bottom = 200.0
-text = "POGO!!!
-DOWN ARROW + X
+offset_left = 1415.0
+offset_top = 95.0
+offset_right = 1835.0
+offset_bottom = 224.0
+text = "      +       =
 "
 label_settings = SubResource("LabelSettings_1gps5")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="keycaps" type="Node" parent="."]
+
+[node name="X" type="AnimatedSprite2D" parent="keycaps"]
+position = Vector2(1727, 134)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_xnkh3")
+frame_progress = 0.508572
+speed_scale = 0.5
+
+[node name="ARROW_DOWN" type="AnimatedSprite2D" parent="keycaps"]
+position = Vector2(1492, 139)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_o523r")
+frame_progress = 0.864718
+speed_scale = 0.5
+
+[node name="KnightPogo" type="Sprite2D" parent="keycaps"]
+position = Vector2(1975, 139)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("16_uet0d")
